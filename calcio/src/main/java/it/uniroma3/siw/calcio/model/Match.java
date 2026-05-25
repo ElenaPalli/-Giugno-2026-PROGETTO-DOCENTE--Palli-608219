@@ -9,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+
 
 @Entity
 public class Match {
@@ -24,7 +24,7 @@ public class Match {
     private int goalsAway;
     private MatchState state;
 
-    @OneToOne
+    @ManyToOne
     private Tournament tournament;
     @ManyToOne
     private Team homeTeams;
@@ -34,11 +34,13 @@ public class Match {
     private Referee referee;
     
     
-    
-    
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Match [id=" + id + ", data=" + data + ", ora=" + ora + ", homeTeams=" + homeTeams
+                + ", awayTeams=" + awayTeams + ", goalsHome=" + goalsHome + ", goalsAway=" + goalsAway
+                + ", state=" + state + ", tournament=" + tournament + ", referee=" + referee + "]";
+    }
+
     //getters e setters
     public Long getId() {
         return id;

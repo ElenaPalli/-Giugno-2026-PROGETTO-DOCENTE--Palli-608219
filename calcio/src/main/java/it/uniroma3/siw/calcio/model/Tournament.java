@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Tournament {
@@ -21,7 +22,8 @@ public class Tournament {
 
     @ManyToOne
     private List<Team> teams;
-
+    @OneToMany
+    private List<Match> matches;
 
 
 

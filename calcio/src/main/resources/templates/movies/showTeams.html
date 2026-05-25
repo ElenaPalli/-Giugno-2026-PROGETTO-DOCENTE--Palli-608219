@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Squadra</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+	<h1>Dettagli squadra</h1>
+	<div th:if="${team}">
+		<span th:text="${team.name}">Roma</span>
+		<span th:text="'(' + ${team.yearFondation} + ')'">2000</span>
+		<span th:text="'(' + ${team.city} + ')'">Roma</span>
+		<!-- <span><img width="5%" th:src="${tournament.urlImage}" alt="Immagine del film" /></span> 
+		<div>
+			<strong>Regista:</strong> 
+			<span th:if="${movie.director}" th:text="${movie.director.name}">Nome regista</span>
+			<span th:unless="${movie.director}">Non specificato</span>
+		</div> -->
+		<div>
+			<strong>Giocatori:</strong>
+			<ul th:if="${not #lists.isEmpty(team.players)}">
+				<li th:each="actor : ${team.players}" th:text="${player.name} + ' ' + ${player.surname}">Nome giocatore</li>
+			</ul>
+			<span th:if="${#lists.isEmpty(team.players)}">Nessun giocatore specificato</span>
+		</div>
+        <div>
+			<strong>Partite in casa:</strong>
+			<ul th:if="${not #lists.isEmpty(team.homeMatches)}">
+				<li th:each="match : ${team.homeMatches}" th:text="${match}">partita</li>
+			</ul>
+			<span th:if="${#lists.isEmpty(team.homeMatches)}">Nessuna partita specificata</span>
+		</div>
+        <div>
+			<strong>Partite in trasferta:</strong>
+			<ul th:if="${not #lists.isEmpty(team.awayMatches)}">
+				<li th:each="match : ${team.awayMatches}" th:text="${match}">partita</li>
+			</ul>
+			<span th:if="${#lists.isEmpty(team.awayMatches)}">Nessuna partita specificata</span>
+		</div>
+	</div>
+	<div th:unless="${team}">Non esiste</div>
+</body>
+
+</html>

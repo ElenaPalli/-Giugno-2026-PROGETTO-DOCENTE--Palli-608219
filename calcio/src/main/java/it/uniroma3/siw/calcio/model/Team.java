@@ -15,8 +15,8 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String nome;
-    private int yearFondation;
+    private String name;
+    private int yearFoundation;
     private String city;
     
     @OneToMany(mappedBy = "teams")
@@ -32,8 +32,6 @@ public class Team {
 
 
 
-
-
     //getters e setters
     public Long getId() {
         return id;
@@ -43,20 +41,20 @@ public class Team {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getYearFondation() {
-        return yearFondation;
+    public int getYearFoundation() {
+        return yearFoundation;
     }
 
-    public void setYearFondation(int yearFondation) {
-        this.yearFondation = yearFondation;
+    public void setYearFoundation(int yearFondation) {
+        this.yearFoundation = yearFondation;
     }
 
     public String getCity() {
@@ -89,8 +87,8 @@ public class Team {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + yearFondation;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + yearFoundation;
         return result;
     }
 
@@ -103,12 +101,12 @@ public class Team {
         if (getClass() != obj.getClass())
             return false;
         Team other = (Team) obj;
-        if (nome == null) {
-            if (other.nome != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!nome.equals(other.nome))
+        } else if (!name.equals(other.name))
             return false;
-        if (yearFondation != other.yearFondation)
+        if (yearFoundation != other.yearFoundation)
             return false;
         return true;
     }

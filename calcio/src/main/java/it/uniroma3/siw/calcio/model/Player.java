@@ -30,10 +30,6 @@ public class Player {
 
 
 
-
-
-
-
     //getters e setters
     public Long getId() {
         return id;
