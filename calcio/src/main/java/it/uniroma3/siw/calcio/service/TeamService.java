@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.uniroma3.siw.calcio.exception.DuplicateMovieException;
+import it.uniroma3.siw.calcio.exception.DuplicateTeamException;
 import it.uniroma3.siw.calcio.model.Team;
 import it.uniroma3.siw.calcio.repository.TeamRepository;
 
@@ -15,8 +15,8 @@ public class TeamService {
 
    private final TeamRepository teamRepository;
 
-    public TeamService(TeamRepository movieRepository) {
-        this.teamRepository = movieRepository;
+    public TeamService(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
     }
 
     public List<Team> findAll() {
@@ -30,8 +30,8 @@ public class TeamService {
     @Transactional
     public Team save(Team team) throws DuplicateTeamException {
         boolean duplicate = team.getId() == null
-            ? teamRepository.existsByNameAndYear(team.getName(), team.getYearFoundation())
-            : teamRepository.existsByNameAndYearAndIdNot(team.getName(), team.getYearFoundation(), team.getId());
+            ? teamRepository.existsByNameAndYearFoundation(team.getName(), team.getYearFoundation())
+            : teamRepository.existsByNameAndYearFoundationAndIdNot(team.getName(), team.getYearFoundation(), team.getId());
         if (duplicate) {
             throw new DuplicateTeamException(team.getName(), team.getYearFoundation());
         }

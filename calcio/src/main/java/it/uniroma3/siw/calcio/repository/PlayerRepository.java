@@ -6,4 +6,7 @@ import it.uniroma3.siw.calcio.model.Player;
 
 public interface PlayerRepository extends JpaRepository<Player, Long>{
     
+    boolean existsByNameAndSurname(String name, String surname);
+
+    boolean existsByNameAndSurnameAndIdNot(String name, String surname, Long id);
 }
