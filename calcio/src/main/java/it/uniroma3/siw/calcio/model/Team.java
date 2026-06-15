@@ -53,8 +53,8 @@ public class Team {
         return yearFoundation;
     }
 
-    public void setYearFoundation(int yearFondation) {
-        this.yearFoundation = yearFondation;
+    public void setYearFoundation(int yearFoundation) {
+        this.yearFoundation = yearFoundation;
     }
 
     public String getCity() {
@@ -79,6 +79,18 @@ public class Team {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+    
+    public void setHomeMatches(List<Match> homeMatches) {
+        this.homeMatches = homeMatches;
+    }
+
+    public List<Match> getAwayMatches() {
+        return awayMatches;
+    }
+
+    public void setAwayMatches(List<Match> awayMatches) {
+        this.awayMatches = awayMatches;
     }
 
 
@@ -110,6 +122,11 @@ public class Team {
             return false;
         return true;
     }
+
+    public List<Match> getHomeMatches() {
+        return homeMatches;
+    }
+
 
     
 }

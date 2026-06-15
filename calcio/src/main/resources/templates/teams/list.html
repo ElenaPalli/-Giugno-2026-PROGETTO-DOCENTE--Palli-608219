@@ -11,7 +11,7 @@
 	<h1>Squadre</h1>
 	<div th:if="${teams==null || teams.isEmpty()}">Non ci sono squadre nel sistema</div>
 	<ul>
-		<li th:each="teams : ${teams}">
+		<li th:each="team : ${teams}">
 			<a th:href="@{'/teams' + '/' + ${team.id}}" th:text="${team.name}">nome</a>
 		</li>
 	</ul>
