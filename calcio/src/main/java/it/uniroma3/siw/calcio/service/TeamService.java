@@ -20,26 +20,34 @@ public class TeamService {
     }
 
     public List<Team> findAll() {
-        return teamRepository.findAll();
+        return this.teamRepository.findAll();
     }
 
+    @Transactional
     public Optional<Team> findById(Long id) {
-        return teamRepository.findById(id);
+        Optional<Team> teamOpt = this.teamRepository.findById(id);
+        if (teamOpt.isPresent()) {
+            Team team = teamOpt.get();
+            if (team.getPlayers() != null) team.getPlayers().size(); // Inizializza la lista
+            if (team.getMatchesHome() != null) team.getMatchesHome().size();
+            if (team.getMatchesAway() != null) team.getMatchesAway().size();
+        }
+        return teamOpt;
     }
 
     @Transactional
     public Team save(Team team) throws DuplicateTeamException {
         boolean duplicate = team.getId() == null
-            ? teamRepository.existsByNameAndYearFoundation(team.getName(), team.getYearFoundation())
-            : teamRepository.existsByNameAndYearFoundationAndIdNot(team.getName(), team.getYearFoundation(), team.getId());
+            ? this.teamRepository.existsByNameAndYearOfFoundation(team.getName(), team.getYearOfFoundation())
+            : this.teamRepository.existsByNameAndYearOfFoundationAndIdNot(team.getName(), team.getYearOfFoundation(), team.getId());
         if (duplicate) {
-            throw new DuplicateTeamException(team.getName(), team.getYearFoundation());
+            throw new DuplicateTeamException(team.getName(), team.getYearOfFoundation());
         }
-        return teamRepository.save(team);
+        return this.teamRepository.save(team);
     }
 
     @Transactional
     public void deleteById(Long id) {
-        teamRepository.deleteById(id);
+        this.teamRepository.deleteById(id);
     }
 }

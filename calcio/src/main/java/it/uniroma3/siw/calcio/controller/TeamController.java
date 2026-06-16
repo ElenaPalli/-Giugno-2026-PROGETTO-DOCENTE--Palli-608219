@@ -36,7 +36,7 @@ public class TeamController {
     @GetMapping("/teams")
     public String list(Model model) {
         model.addAttribute("teams", teamService.findAll());
-        return "teams/list";
+        return "teams/listTeam";
     }
 
     @GetMapping("/teams/{id}")
@@ -46,7 +46,7 @@ public class TeamController {
             return "redirect:/teams";
         }
         model.addAttribute("team", optional.get());
-        return "teams/show";
+        return "teams/showTeam";
     }
 
     @GetMapping("/admin/teams/new")
@@ -97,7 +97,7 @@ public class TeamController {
             return "redirect:/teams";
         } catch (DuplicateTeamException e) {
             model.addAttribute("players", playerService.findAll());
-            bindingResult.reject("team.duplicate", "Esiste giÃ  una squadra con questo nome");
+            bindingResult.reject("team.duplicate", "Esiste già una squadra con questo nome");
             return "admin/teams/form";
         }
     }
