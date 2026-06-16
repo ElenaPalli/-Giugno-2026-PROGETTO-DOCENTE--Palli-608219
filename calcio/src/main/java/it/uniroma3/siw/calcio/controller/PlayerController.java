@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.uniroma3.siw.calcio.exception.DuplicatePlayerException;
 import it.uniroma3.siw.calcio.model.Player;
@@ -17,7 +16,6 @@ import it.uniroma3.siw.calcio.service.PlayerService;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/players")
 public class PlayerController {
 	private final PlayerService playerService;
 
@@ -25,35 +23,35 @@ public class PlayerController {
 		this.playerService = playerService;
 	}
 
-	@GetMapping
+	@GetMapping("/players")
 	public String list(Model model) {
 		model.addAttribute("players", playerService.findAll());
-		return "players/list";
+		return "players/listPlayer";
 	}
 
-	@GetMapping("/new")
+	@GetMapping("/admin/players/new")
 	public String createForm(Model model) {
 		model.addAttribute("player", new Player());
-		return "players/form";
+		return "admin/players/form";
 	}
 
-	@PostMapping
+	@PostMapping("/admin/players")
 	public String save(@Valid @ModelAttribute("player") Player player,
 			BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
-			return "players/form";
+			return "admin/players/form";
 		}
 		try {
 			playerService.save(player);
 			return "redirect:/players";
 		} catch (DuplicatePlayerException e) {
-			bindingResult.reject("player.duplicate", "Esiste giÃ un giocatore con questo nome e data di nascita");
-			return "players/form";
+			bindingResult.reject("player.duplicate", "Esiste già un giocatore con questo nome e data di nascita");
+			return "admin/players/form";
 		}
 	}
 
-	@GetMapping("/{id}/edit")
+	@GetMapping("/admin/players/{id}/edit")
 	public String editForm(@PathVariable Long id, Model model) {
 		Optional<Player> optional = playerService.findById(id);
 		if (optional.isPresent()) {
@@ -62,16 +60,16 @@ public class PlayerController {
 		} else {
 			return "redirect:/players";
 		}
-		return "players/form";
+		return "admin/players/form";
 	}
 
-	@PostMapping("/{id}/delete")
+	@PostMapping("/admin/players/{id}/delete")
 	public String delete(@PathVariable Long id) {
 		playerService.deleteById(id);
 		return "redirect:/players";
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/players/{id}")
 	public String show(@PathVariable Long id, Model model) {
 		Optional<Player> optional = playerService.findById(id);
 
@@ -81,6 +79,6 @@ public class PlayerController {
 		} else {
 			return "redirect:/players";
 		}
-		return "players/show";
+		return "players/showPlayer";
 	}
 }

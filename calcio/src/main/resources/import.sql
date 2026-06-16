@@ -25,20 +25,20 @@ values(nextval('tournament_seq'), 'Serie A', 2025, 'Campionato nazionale di mass
 insert into tournament (id, name, year, description)
 values(nextval('tournament_seq'), 'Coppa Italia', 2025, 'Competizione a eliminazione diretta.');
 
-insert into match (id, date, time, state, tournament_id, team_home_id, team_away_id, referee_id)
-values(nextval('match_seq'), '2025-09-01', '20:45:00', 'SCHEDULED',
+insert into match (id, date, time, goals_home, goals_away, state, tournament_id, home_teams_id, away_teams_id, referee_id)
+values(nextval('match_seq'), '2025-09-01', '20:45:00', 0, 0, PLAYED,
 	(select id from tournament where name = 'Serie A' and year = 2025),
 	(select id from team where name = 'Roma'),
 	(select id from team where name = 'Lazio'),
 	(select id from referee where referee_code = 'R-1001'));
-insert into match (id, date, time, state, tournament_id, team_home_id, team_away_id, referee_id)
-values(nextval('match_seq'), '2025-09-07', '18:00:00', 'SCHEDULED',
+insert into match (id, date, time, goals_home, goals_away, state, tournament_id, home_teams_id, away_teams_id, referee_id)
+values(nextval('match_seq'), '2025-09-07', '18:00:00', 0, 0, SCHEDULED,
 	(select id from tournament where name = 'Serie A' and year = 2025),
 	(select id from team where name = 'Juventus'),
 	(select id from team where name = 'Milan'),
 	(select id from referee where referee_code = 'R-1002'));
-insert into match (id, date, time, state, tournament_id, team_home_id, team_away_id, referee_id)
-values(nextval('match_seq'), '2025-10-15', '21:00:00', 'PLAYED',
+insert into match (id, date, time, goals_home, goals_away, state, tournament_id, home_teams_id, away_teams_id, referee_id)
+values(nextval('match_seq'), '2025-10-15', '21:00:00', 2, 1, PLAYED,
 	(select id from tournament where name = 'Coppa Italia' and year = 2025),
 	(select id from team where name = 'Inter'),
 	(select id from team where name = 'Roma'),

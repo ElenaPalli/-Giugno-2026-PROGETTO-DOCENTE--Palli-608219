@@ -2,7 +2,7 @@ package it.uniroma3.siw.calcio.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,25 +18,28 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private LocalDate data;
-    private LocalTime ora;
+    private LocalDate date;
+    private LocalTime time;
     private int goalsHome;
     private int goalsAway;
     private MatchState state;
 
     @ManyToOne
     private Tournament tournament;
+    
     @ManyToOne
     private Team homeTeams;
+    
     @ManyToOne
     private Team awayTeams;
+    
     @ManyToOne
     private Referee referee;
     
     
     @Override
     public String toString() {
-        return "Match [id=" + id + ", data=" + data + ", ora=" + ora + ", homeTeams=" + homeTeams
+        return "Match [id=" + id + ", date=" + date + ", time=" + time + ", homeTeams=" + homeTeams
                 + ", awayTeams=" + awayTeams + ", goalsHome=" + goalsHome + ", goalsAway=" + goalsAway
                 + ", state=" + state + ", tournament=" + tournament + ", referee=" + referee + "]";
     }
@@ -48,17 +51,17 @@ public class Match {
     public void setId(Long id) {
         this.id = id;
     }
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDate() {
+        return date;
     }
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-    public LocalTime getOra() {
-        return ora;
+    public LocalTime getTime() {
+        return time;
     }
-    public void setOra(LocalTime ora) {
-        this.ora = ora;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
     public int getGoalsHome() {
         return goalsHome;
@@ -111,8 +114,8 @@ public class Match {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        result = prime * result + ((ora == null) ? 0 : ora.hashCode());
+        result = prime * result + ((date == null) ? 0 : date.hashCode());
+        result = prime * result + ((time == null) ? 0 : time.hashCode());
         result = prime * result + ((tournament == null) ? 0 : tournament.hashCode());
         result = prime * result + ((homeTeams == null) ? 0 : homeTeams.hashCode());
         result = prime * result + ((awayTeams == null) ? 0 : awayTeams.hashCode());
@@ -127,15 +130,15 @@ public class Match {
         if (getClass() != obj.getClass())
             return false;
         Match other = (Match) obj;
-        if (data == null) {
-            if (other.data != null)
+        if (date == null) {
+            if (other.date != null)
                 return false;
-        } else if (!data.equals(other.data))
+        } else if (!date.equals(other.date))
             return false;
-        if (ora == null) {
-            if (other.ora != null)
+        if (time == null) {
+            if (other.time != null)
                 return false;
-        } else if (!ora.equals(other.ora))
+        } else if (!time.equals(other.time))
             return false;
         if (tournament == null) {
             if (other.tournament != null)
