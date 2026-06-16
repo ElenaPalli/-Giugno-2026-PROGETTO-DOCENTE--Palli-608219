@@ -58,6 +58,7 @@ public class AuthenticationController {
                  BindingResult credentialsBindingResult) {
 
         if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+            user.setUsername(credentials.getUsername());
             credentials.setUser(user);
             credentialsService.saveCredentials(credentials);
             return "redirect:/";

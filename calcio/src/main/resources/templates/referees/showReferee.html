@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dettagli Arbitro</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+    <div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+    <h1>Dettagli Arbitro</h1>
+    <div th:if="${referee}">
+        <h2 th:text="${referee.name} + ' ' + ${referee.surname}">Nome Cognome</h2>
+        <div>
+            <strong>Codice Arbitro:</strong>
+            <span th:text="${referee.refereeCode}">R-0000</span>
+        </div>
+    </div>
+    <div th:unless="${referee}">L'arbitro richiesto non esiste.</div>
+</body>
+
+</html>

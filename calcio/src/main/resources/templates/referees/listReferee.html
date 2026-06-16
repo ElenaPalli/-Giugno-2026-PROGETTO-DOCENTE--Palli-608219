@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Arbitri</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+    <div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+    <h1>Arbitri</h1>
+    <div th:if="${referees==null || referees.isEmpty()}">Non ci sono arbitri nel sistema</div>
+    <ul>
+        <li th:each="referee : ${referees}">
+            <a th:href="@{'/referees' + '/' + ${referee.id}}" th:text="${referee.name} + ' ' + ${referee.surname}">Nome
+                Cognome</a>
+        </li>
+    </ul>
+</body>
+
+</html>

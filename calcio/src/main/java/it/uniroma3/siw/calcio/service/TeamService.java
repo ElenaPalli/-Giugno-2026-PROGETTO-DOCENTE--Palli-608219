@@ -13,7 +13,7 @@ import it.uniroma3.siw.calcio.repository.TeamRepository;
 @Service
 public class TeamService {
 
-   private final TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     public TeamService(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
@@ -28,9 +28,14 @@ public class TeamService {
         Optional<Team> teamOpt = this.teamRepository.findById(id);
         if (teamOpt.isPresent()) {
             Team team = teamOpt.get();
-            if (team.getPlayers() != null) team.getPlayers().size(); // Inizializza la lista
-            if (team.getMatchesHome() != null) team.getMatchesHome().size();
-            if (team.getMatchesAway() != null) team.getMatchesAway().size();
+            if (team.getPlayers() != null)
+                team.getPlayers().size();
+            if (team.getHomeMatches() != null)
+                team.getHomeMatches().size();
+            if (team.getAwayMatches() != null)
+                team.getAwayMatches().size();
+            if (team.getTournaments() != null) // AGGIUNTO DA ME
+                team.getTournaments().size();
         }
         return teamOpt;
     }
@@ -38,10 +43,11 @@ public class TeamService {
     @Transactional
     public Team save(Team team) throws DuplicateTeamException {
         boolean duplicate = team.getId() == null
-            ? this.teamRepository.existsByNameAndYearOfFoundation(team.getName(), team.getYearOfFoundation())
-            : this.teamRepository.existsByNameAndYearOfFoundationAndIdNot(team.getName(), team.getYearOfFoundation(), team.getId());
+                ? this.teamRepository.existsByNameAndYearFoundation(team.getName(), team.getYearFoundation())
+                : this.teamRepository.existsByNameAndYearFoundationAndIdNot(team.getName(), team.getYearFoundation(),
+                        team.getId());
         if (duplicate) {
-            throw new DuplicateTeamException(team.getName(), team.getYearOfFoundation());
+            throw new DuplicateTeamException(team.getName(), team.getYearFoundation());
         }
         return this.teamRepository.save(team);
     }

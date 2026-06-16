@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Team {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -19,21 +19,19 @@ public class Team {
     private String name;
     private int yearFoundation;
     private String city;
-    
+
     @ManyToMany(mappedBy = "teams")
     private List<Tournament> tournaments;
 
     @OneToMany(mappedBy = "team")
     private List<Player> players;
 
-    @OneToMany(mappedBy = "homeTeams")
+    @OneToMany(mappedBy = "homeTeam")
     private List<Match> homeMatches;
-    @OneToMany(mappedBy = "awayTeams")
+    @OneToMany(mappedBy = "awayTeam")
     private List<Match> awayMatches;
 
-
-
-    //getters e setters
+    // getters e setters
     public Long getId() {
         return id;
     }
@@ -81,7 +79,7 @@ public class Team {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-    
+
     public void setHomeMatches(List<Match> homeMatches) {
         this.homeMatches = homeMatches;
     }
@@ -94,8 +92,7 @@ public class Team {
         this.awayMatches = awayMatches;
     }
 
-
-    //hashCode e equals
+    // hashCode e equals
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -128,6 +125,4 @@ public class Team {
         return homeMatches;
     }
 
-
-    
 }

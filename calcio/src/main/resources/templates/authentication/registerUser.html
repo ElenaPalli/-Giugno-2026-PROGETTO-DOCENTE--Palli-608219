@@ -38,12 +38,7 @@
 			<span th:if="${#fields.hasErrors('user.surname')}" th:errors="${user.surname}" th:style="'color:red'">
 			</span>
 		</div>
-		<div>
-			<label>Email</label>
-			<span><input type="text" placeholder="email" required th:field="${user.email}" /></span>
-			<span th:if="${#fields.hasErrors('user.email')}" th:errors="${user.email}" th:style="'color:red'">
-			</span>
-		</div>
+
 		<div>
 			<label>Username</label>
 			<span>

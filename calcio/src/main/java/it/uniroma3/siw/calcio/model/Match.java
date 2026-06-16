@@ -3,113 +3,131 @@ package it.uniroma3.siw.calcio.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 @Entity
 public class Match {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private LocalDate date;
     private LocalTime time;
+
     private int goalsHome;
     private int goalsAway;
+
+    @Enumerated(EnumType.STRING)
     private MatchState state;
 
     @ManyToOne
     private Tournament tournament;
-    
+
     @ManyToOne
-    private Team homeTeams;
-    
+    private Team homeTeam;
+
     @ManyToOne
-    private Team awayTeams;
-    
+    private Team awayTeam;
+
     @ManyToOne
     private Referee referee;
-    
-    
+
     @Override
     public String toString() {
-        return "Match [id=" + id + ", date=" + date + ", time=" + time + ", homeTeams=" + homeTeams
-                + ", awayTeams=" + awayTeams + ", goalsHome=" + goalsHome + ", goalsAway=" + goalsAway
+        return "Match [id=" + id + ", date=" + date + ", time=" + time + ", homeTeam=" + homeTeam
+                + ", awayTeam=" + awayTeam + ", goalsHome=" + goalsHome + ", goalsAway=" + goalsAway
                 + ", state=" + state + ", tournament=" + tournament + ", referee=" + referee + "]";
     }
 
-    //getters e setters
+    // getters e setters
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public LocalDate getDate() {
         return date;
     }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
     public LocalTime getTime() {
         return time;
     }
+
     public void setTime(LocalTime time) {
         this.time = time;
     }
+
     public int getGoalsHome() {
         return goalsHome;
     }
+
     public void setGoalsHome(int goalsHome) {
         this.goalsHome = goalsHome;
     }
+
     public int getGoalsAway() {
         return goalsAway;
     }
+
     public void setGoalsAway(int goalsAway) {
         this.goalsAway = goalsAway;
     }
+
     public MatchState getState() {
         return state;
     }
+
     public void setState(MatchState state) {
         this.state = state;
     }
+
     public Tournament getTournament() {
         return tournament;
     }
+
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
-    
+
     public Referee getReferee() {
         return referee;
     }
+
     public void setReferee(Referee referee) {
         this.referee = referee;
     }
-    public Team getHomeTeams() {
-        return homeTeams;
+
+    public Team getHomeTeam() {
+        return homeTeam;
     }
-    public void setHomeTeams(Team homeTeams) {
-        this.homeTeams = homeTeams;
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
     }
-    public Team getAwayTeams() {
-        return awayTeams;
+
+    public Team getAwayTeam() {
+        return awayTeam;
     }
-    public void setAwayTeams(Team awayTeams) {
-        this.awayTeams = awayTeams;
+
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
     }
-    
-    
-    
-    //hashCode e equals
+
+    // hashCode e equals
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -117,10 +135,11 @@ public class Match {
         result = prime * result + ((date == null) ? 0 : date.hashCode());
         result = prime * result + ((time == null) ? 0 : time.hashCode());
         result = prime * result + ((tournament == null) ? 0 : tournament.hashCode());
-        result = prime * result + ((homeTeams == null) ? 0 : homeTeams.hashCode());
-        result = prime * result + ((awayTeams == null) ? 0 : awayTeams.hashCode());
+        result = prime * result + ((homeTeam == null) ? 0 : homeTeam.hashCode());
+        result = prime * result + ((awayTeam == null) ? 0 : awayTeam.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -145,18 +164,17 @@ public class Match {
                 return false;
         } else if (!tournament.equals(other.tournament))
             return false;
-        if (homeTeams == null) {
-            if (other.homeTeams != null)
+        if (homeTeam == null) {
+            if (other.homeTeam != null)
                 return false;
-        } else if (!homeTeams.equals(other.homeTeams))
+        } else if (!homeTeam.equals(other.homeTeam))
             return false;
-        if (awayTeams == null) {
-            if (other.awayTeams != null)
+        if (awayTeam == null) {
+            if (other.awayTeam != null)
                 return false;
-        } else if (!awayTeams.equals(other.awayTeams))
+        } else if (!awayTeam.equals(other.awayTeam))
             return false;
         return true;
     }
 
-    
 }

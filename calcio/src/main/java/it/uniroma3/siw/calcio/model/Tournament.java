@@ -11,7 +11,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Tournament {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -22,40 +22,60 @@ public class Tournament {
 
     @ManyToMany
     private List<Team> teams;
-    
-    @OneToMany(mappedBy = "tournaments")
+
+    @OneToMany(mappedBy = "tournament")
     private List<Match> matches;
 
-
-
-    //getters e setters
+    // getters e setters
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public int getYear() {
         return year;
     }
+
     public void setYear(int year) {
         this.year = year;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public List<Team> getTeams() {
+        return teams;
+    }
 
-    //hashCode e equals
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(List<Match> matches) {
+        this.matches = matches;
+    }
+
+    // hashCode e equals
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -64,6 +84,7 @@ public class Tournament {
         result = prime * result + year;
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -82,4 +103,5 @@ public class Tournament {
             return false;
         return true;
     }
+
 }
