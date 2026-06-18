@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.uniroma3.siw.calcio.model.RankingRow;
 import it.uniroma3.siw.calcio.model.Tournament;
 import it.uniroma3.siw.calcio.repository.TournamentRepository;
 
@@ -27,8 +28,10 @@ public class TournamentService {
         Optional<Tournament> tournamentOpt = this.tournamentRepository.findById(id);
         if (tournamentOpt.isPresent()) {
             Tournament tournament = tournamentOpt.get();
-            if (tournament.getTeams() != null) tournament.getTeams().size();
-            if (tournament.getMatches() != null) tournament.getMatches().size();
+            if (tournament.getTeams() != null)
+                tournament.getTeams().size();
+            if (tournament.getMatches() != null)
+                tournament.getMatches().size();
         }
         return tournamentOpt;
     }
@@ -41,5 +44,10 @@ public class TournamentService {
     @Transactional
     public void deleteById(Long id) {
         tournamentRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RankingRow> getTournamentRanking(Long tournamentId) {
+        return tournamentRepository.calculateTournamentRanking(tournamentId);
     }
 }

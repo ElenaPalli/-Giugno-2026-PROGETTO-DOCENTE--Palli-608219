@@ -2,45 +2,90 @@
 <html>
 
 <head>
-	<title>Squadra</title>
+	<title>Team</title>
 	<link rel="stylesheet" href="/css/stile.css" />
 </head>
 
 <body>
 	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
-	<h1>Dettagli squadra</h1>
+	<h1>Dettagli Team</h1>
 	<div th:if="${team}">
+
 		<span th:text="${team.name}">Roma</span>
+
 		<span th:text="'(' + ${team.yearFoundation} + ')'">2000</span>
-		<span th:text="'(' + ${team.city} + ')'">Roma</span>
-		<!-- <span><img width="5%" th:src="${tournament.urlImage}" alt="Immagine del film" /></span> 
+
+		<span th:text="'(' + ${team.city} + ')'">Acilia</span>
+
+		<!-- <span><img width="5%" th:src="${team.urlImage}" alt="Immagine della squadra" /></span> -->
+
+		<!-- 
 		<div>
-			<strong>Regista:</strong> 
+			<strong>:</strong> 
 			<span th:if="${movie.director}" th:text="${movie.director.name}">Nome regista</span>
 			<span th:unless="${movie.director}">Non specificato</span>
 		</div> -->
+
+
 		<div>
 			<strong>Giocatori:</strong>
 			<ul th:if="${not #lists.isEmpty(team.players)}">
-				<li th:each="player : ${team.players}" th:text="${player.name} + ' ' + ${player.surname}">Nome giocatore</li>
+				<li th:each="player : ${team.players}">
+					<a th:href="@{'/players' + '/' + ${player.id}}"
+						th:text="${player.name} + ' ' + ${player.surname}">Nome Cognome</a>
+				</li>
 			</ul>
-			<span th:if="${#lists.isEmpty(team.players)}">Nessun giocatore specificato</span>
+			<span th:if="${#lists.isEmpty(team.players)}">Nessun player specificato</span>
 		</div>
-        <div>
+
+		<div>
 			<strong>Partite in casa:</strong>
 			<ul th:if="${not #lists.isEmpty(team.homeMatches)}">
-				<li th:each="match : ${team.homeMatches}" th:text="${match}">partita</li>
+				<li th:each="match : ${team.homeMatches}">
+					<a th:href="@{'/matches/' + ${match.id}}">
+						<span th:if="${match.state.name() != 'PLAYED'}"
+							th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</span>
+						<span th:if="${match.state.name() == 'PLAYED'}"
+							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
+							3 - 1 Lazio</span>
+					</a>
+					<span th:text="' (' + ${match.date} + ')'"></span>
+				</li>
 			</ul>
-			<span th:if="${#lists.isEmpty(team.homeMatches)}">Nessuna partita specificata</span>
+			<span th:if="${#lists.isEmpty(team.homeMatches)}">Nessuna partita in casa.</span>
 		</div>
-        <div>
-			<strong>Partite in trasferta:</strong>
+
+		<div>
+			<strong>Partite fuori casa:</strong>
 			<ul th:if="${not #lists.isEmpty(team.awayMatches)}">
-				<li th:each="match : ${team.awayMatches}" th:text="${match}">partita</li>
+				<li th:each="match : ${team.awayMatches}">
+					<a th:href="@{'/matches/' + ${match.id}}">
+						<span th:if="${match.state.name() != 'PLAYED'}"
+							th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</span>
+						<span th:if="${match.state.name() == 'PLAYED'}"
+							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
+							3 - 1 Lazio</span>
+					</a>
+					<span th:text="' (' + ${match.date} + ')'"></span>
+				</li>
 			</ul>
-			<span th:if="${#lists.isEmpty(team.awayMatches)}">Nessuna partita specificata</span>
+			<span th:if="${#lists.isEmpty(team.awayMatches)}">Nessuna partita fuori casa.</span>
 		</div>
+
+
+
+		<div th:if="${isAdmin}">
+			<hr>
+			<h3>Amministrazione</h3>
+			<a th:href="@{'/admin/teams/' + ${team.id} + '/edit'}">Modifica Squadra</a>
+			<form th:action="@{'/admin/teams/' + ${team.id} + '/delete'}" method="POST" style="display:inline;">
+				<button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questa squadra?')">Elimina
+					Squadra</button>
+			</form>
+		</div>
+
 	</div>
+
 	<div th:unless="${team}">Non esiste</div>
 </body>
 

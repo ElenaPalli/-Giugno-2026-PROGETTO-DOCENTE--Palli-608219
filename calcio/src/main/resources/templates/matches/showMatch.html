@@ -13,7 +13,9 @@
 
         <h2>
             <a th:href="@{'/teams/' + ${match.homeTeam.id}}" th:text="${match.homeTeam.name}">Squadra Casa</a>
-            <span> vs </span>
+            <span th:if="${match.state.name() != 'PLAYED'}"> vs </span>
+            <span th:if="${match.state.name() == 'PLAYED'}"
+                th:text="' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' '"> 0 - 0 </span>
             <a th:href="@{'/teams/' + ${match.awayTeam.id}}" th:text="${match.awayTeam.name}">Squadra Ospite</a>
         </h2>
 
@@ -32,8 +34,20 @@
         </div>
         <div>
             <strong>Arbitro:</strong>
-            <span th:if="${match.referee}" th:text="${match.referee.name} + ' ' + ${match.referee.surname}">Nome
-                Arbitro</span>
+            <span th:if="${match.referee}">
+                <a th:href="@{'/referees/' + ${match.referee.id}}"
+                    th:text="${match.referee.name} + ' ' + ${match.referee.surname}">Nome Arbitro</a>
+            </span>
+        </div>
+
+        <div th:if="${isAdmin}">
+            <hr>
+            <h3>Amministrazione</h3>
+            <a th:href="@{'/admin/matches/' + ${match.id} + '/edit'}">Modifica Risultato/Partita</a>
+            <form th:action="@{'/admin/matches/' + ${match.id} + '/delete'}" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questa partita?')">Elimina
+                    Partita</button>
+            </form>
         </div>
 
     </div>

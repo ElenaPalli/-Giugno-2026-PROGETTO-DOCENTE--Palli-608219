@@ -39,6 +39,7 @@ public class Match {
     @ManyToOne
     private Referee referee;
 
+    // diverso da Ricc!!!!!!!!!!!!!!!!!!!!!
     @Override
     public String toString() {
         return "Match [id=" + id + ", date=" + date + ", time=" + time + ", homeTeam=" + homeTeam

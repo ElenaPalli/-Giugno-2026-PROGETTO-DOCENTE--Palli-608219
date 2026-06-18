@@ -34,6 +34,15 @@ public class RefereeService {
 
     @Transactional
     public void deleteById(Long id) {
-        refereeRepository.deleteById(id);
+        Optional<Referee> refereeOpt = refereeRepository.findById(id);
+        if (refereeOpt.isPresent()) {
+            Referee referee = refereeOpt.get();
+            if (referee.getRefereedMatches() != null) {
+                for (it.uniroma3.siw.calcio.model.Match match : referee.getRefereedMatches()) {
+                    match.setReferee(null);
+                }
+            }
+            refereeRepository.delete(referee);
+        }
     }
 }

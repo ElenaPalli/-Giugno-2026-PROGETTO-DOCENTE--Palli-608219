@@ -2,39 +2,91 @@
 <html>
 
 <head>
-	<title>Torneo</title>
+	<title>Dettagli Torneo</title>
 	<link rel="stylesheet" href="/css/stile.css" />
 </head>
 
 <body>
 	<div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
-	<h1>Dettagli torneo</h1>
+	<h1>Dettagli Torneo</h1>
 	<div th:if="${tournament}">
-		<span th:text="${tournament.name}">serie A</span>
-		<span th:text="'(' + ${tournament.year} + ')'">2026</span>
-		<span th:text="'(' + ${tournament.description} + ')'">descrizione</span>
-		<!--<span><img width="5%" th:src="${tournament.urlImage}" alt="Immagine del film" /></span>
+
+		<span th:text="${tournament.name}">Nome Torneo</span>
+
+		<span th:text="'(' + ${tournament.year} + ')'">2025</span>
+
+		<p th:text="${tournament.description}">descrizione</p>
+
 		<div>
-			<strong>Regista:</strong> 
-			<span th:if="${movie.director}" th:text="${movie.director.name}">Nome regista</span>
-			<span th:unless="${movie.director}">Non specificato</span>
-		</div>-->
-		<div>
-			<strong>Partite:</strong>
-			<ul th:if="${not #lists.isEmpty(tournament.matches)}">
-				<li th:each="match : ${tournament.matches}" th:text="${match}">partita</li>
-			</ul>
-			<span th:if="${#lists.isEmpty(tournament.matches)}">Nessuna partita specificata</span>
-		</div>
-		<div>
-			<strong>Squadre:</strong>
+			<strong>Squadre Iscritte:</strong>
 			<ul th:if="${not #lists.isEmpty(tournament.teams)}">
-				<li th:each="team : ${tournament.teams}" th:text="${team.name}">nome squadra</li>
+				<li th:each="team : ${tournament.teams}">
+					<a th:href="@{'/teams' + '/' + ${team.id}}" th:text="${team.name}">Nome squadra</a>
+				</li>
 			</ul>
-			<span th:if="${#lists.isEmpty(tournament.teams)}">Nessuna squadra specificata</span>
+			<span th:if="${#lists.isEmpty(tournament.teams)}">Nessuna squadra iscritta.</span>
 		</div>
+
+		<div>
+			<strong>Partite Già Effettuate:</strong>
+			<ul th:if="${not #lists.isEmpty(playedMatches)}">
+				<li th:each="match : ${playedMatches}">
+					<a th:href="@{'/matches' + '/' + ${match.id}}"
+						th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
+						3 - 1 Lazio</a>
+					<span th:text="' (' + ${match.date} + ')'"></span>
+				</li>
+			</ul>
+			<span th:if="${#lists.isEmpty(playedMatches)}">Nessuna partita effettuata.</span>
+		</div>
+
+		<div>
+			<strong>Partite da Effettuare:</strong>
+			<ul th:if="${not #lists.isEmpty(scheduledMatches)}">
+				<li th:each="match : ${scheduledMatches}">
+					<a th:href="@{'/matches' + '/' + ${match.id}}"
+						th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</a>
+					<span th:text="' (' + ${match.date} + ')'"></span>
+				</li>
+			</ul>
+			<span th:if="${#lists.isEmpty(scheduledMatches)}">Nessuna partita da effettuare.</span>
+		</div>
+
+		<div>
+			<strong>Classifica (Gol Fatti):</strong>
+			<table border="1" th:if="${not #lists.isEmpty(ranking)}">
+				<thead>
+					<tr>
+						<th>Squadra</th>
+						<th>Gol Fatti</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="row : ${ranking}">
+						<td>
+							<a th:href="@{'/teams' + '/' + ${row.teamId}}" th:text="${row.teamName}">Nome</a>
+						</td>
+						<td th:text="${row.goalsFor}">0</td>
+					</tr>
+				</tbody>
+			</table>
+			<span th:if="${#lists.isEmpty(ranking)}">Nessuna classifica disponibile.</span>
+		</div>
+
+		<div th:if="${isAdmin}">
+			<hr>
+			<h3>Amministrazione</h3>
+			<a th:href="@{'/admin/tournaments/' + ${tournament.id} + '/edit'}">Modifica Torneo</a>
+			<form th:action="@{'/admin/tournaments/' + ${tournament.id} + '/delete'}" method="POST"
+				style="display:inline;">
+				<button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo torneo?')">Elimina
+					Torneo</button>
+			</form>
+		</div>
+
 	</div>
-	<div th:unless="${tournament}">Non esiste</div>
+
+	<div th:unless="${tournament}">Il torneo richiesto non esiste.</div>
 </body>
 
 </html>

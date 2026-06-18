@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.calcio.exception.DuplicatePlayerException;
 import it.uniroma3.siw.calcio.model.Player;
 import it.uniroma3.siw.calcio.service.PlayerService;
+import it.uniroma3.siw.calcio.service.TeamService;
 import jakarta.validation.Valid;
 
 @Controller
 public class PlayerController {
 	private final PlayerService playerService;
+	private final TeamService teamService;
 
-	public PlayerController(PlayerService playerService) {
+	public PlayerController(PlayerService playerService, TeamService teamService) {
 		this.playerService = playerService;
+		this.teamService = teamService;
 	}
 
 	@GetMapping("/players")
@@ -32,6 +35,7 @@ public class PlayerController {
 	@GetMapping("/admin/players/new")
 	public String createForm(Model model) {
 		model.addAttribute("player", new Player());
+		model.addAttribute("teams", teamService.findAll());
 		return "admin/players/form";
 	}
 
@@ -57,6 +61,7 @@ public class PlayerController {
 		if (optional.isPresent()) {
 			Player p = optional.get();
 			model.addAttribute("player", p);
+			model.addAttribute("teams", teamService.findAll());
 		} else {
 			return "redirect:/players";
 		}
