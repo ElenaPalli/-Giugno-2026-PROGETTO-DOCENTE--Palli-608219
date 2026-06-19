@@ -16,6 +16,9 @@
                 Cognome</a>
         </li>
     </ul>
+    <div th:if="${isAdmin}">
+        <a href="/admin/referees/new"><button type="button">Aggiungi arbitro</button></a>
+    </div>
 </body>
 
 </html>

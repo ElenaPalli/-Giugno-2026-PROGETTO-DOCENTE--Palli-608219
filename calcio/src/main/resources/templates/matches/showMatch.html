@@ -81,7 +81,7 @@
         <div th:if="${isAdmin}">
             <hr>
             <h3>Amministrazione</h3>
-            <a th:href="@{'/admin/matches/' + ${match.id} + '/edit'}">Modifica Risultato/Partita</a>
+            <a th:href="@{'/admin/matches/' + ${match.id} + '/edit'}"><button type="button">Modifica Risultato/Partita</button></a>
             <form th:action="@{'/admin/matches/' + ${match.id} + '/delete'}" method="POST" style="display:inline;">
                 <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questa partita?')">Elimina
                     Partita</button>

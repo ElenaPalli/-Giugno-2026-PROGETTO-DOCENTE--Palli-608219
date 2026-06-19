@@ -15,6 +15,9 @@
 			<a th:href="@{'/tournaments' + '/' + ${tournament.id}}" th:text="${tournament.name}">nome</a>
 		</li>
 	</ul>
+	<div th:if="${isAdmin}">
+		<a href="/admin/tournaments/new"><button type="button">Aggiungi torneo</button></a>
+	</div>
 </body>
 
 </html>

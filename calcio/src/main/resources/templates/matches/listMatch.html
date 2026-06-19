@@ -16,6 +16,9 @@
                 th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</a>
         </li>
     </ul>
+    <div th:if="${isAdmin}">
+        <a href="/admin/matches/new"><button type="button">Aggiungi partita</button></a>
+    </div>
 </body>
 
 </html>

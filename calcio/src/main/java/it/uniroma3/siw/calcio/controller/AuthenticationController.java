@@ -12,27 +12,24 @@ import it.uniroma3.siw.calcio.model.User;
 import it.uniroma3.siw.calcio.service.CredentialsService;
 import jakarta.validation.Valid;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
 @Controller
 public class AuthenticationController {
-	
+
 	private final CredentialsService credentialsService;
 
-    public AuthenticationController(CredentialsService credentialsService) {
-        this.credentialsService = credentialsService;
-    }
+	public AuthenticationController(CredentialsService credentialsService) {
+		this.credentialsService = credentialsService;
+	}
 
-	@GetMapping(value = "/register") 
-	public String showRegisterForm (Model model) {
+	@GetMapping(value = "/register")
+	public String showRegisterForm(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
 		return "authentication/registerUser";
 	}
-	
-	@GetMapping(value = "/login") 
-	public String showLoginForm (Model model) {
+
+	@GetMapping(value = "/login")
+	public String showLoginForm(Model model) {
 		return "authentication/login";
 	}
 
@@ -41,23 +38,17 @@ public class AuthenticationController {
 		return "admin/index";
 	}
 
-	@GetMapping(value = "/success")
-	public String defaultAfterLogin() {
-		return "redirect:/";
-	}
-		
 	@PostMapping(value = { "/register" })
-    public String registerUser(@Valid @ModelAttribute("user") User user,
-                 BindingResult userBindingResult, @Valid
-                 @ModelAttribute("credentials") Credentials credentials,
-                 BindingResult credentialsBindingResult) {
+	public String registerUser(@Valid @ModelAttribute("user") User user,
+			BindingResult userBindingResult, @Valid @ModelAttribute("credentials") Credentials credentials,
+			BindingResult credentialsBindingResult) {
 
-        if(!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
-            user.setUsername(credentials.getUsername());
-            credentials.setUser(user);
-            credentialsService.saveCredentials(credentials);
-            return "redirect:/";
-        }
-        return "authentication/registerUser";
-    }
+		if (!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
+			user.setUsername(credentials.getUsername());
+			credentials.setUser(user);
+			credentialsService.saveCredentials(credentials);
+			return "redirect:/";
+		}
+		return "authentication/registerUser";
+	}
 }

@@ -15,6 +15,9 @@
 			<a th:href="@{'/teams' + '/' + ${team.id}}" th:text="${team.name}">nome</a>
 		</li>
 	</ul>
+	<div th:if="${isAdmin}">
+		<a href="/admin/teams/new"><button type="button">Aggiungi squadra</button></a>
+	</div>
 </body>
 	
 </html>

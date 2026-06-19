@@ -13,7 +13,7 @@ import it.uniroma3.siw.calcio.repository.MatchRepository;
 @Service
 public class MatchService {
     private final MatchRepository matchRepository;
-    private CommentService commentService;
+    private final CommentService commentService;
 
     public MatchService(MatchRepository matchRepository, CommentService commentService) {
         this.matchRepository = matchRepository;
@@ -25,12 +25,12 @@ public class MatchService {
         return matchRepository.save(match);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Match> findById(Long id) {
         return matchRepository.findById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Match> findAll() {
         return (List<Match>) matchRepository.findAll();
     }

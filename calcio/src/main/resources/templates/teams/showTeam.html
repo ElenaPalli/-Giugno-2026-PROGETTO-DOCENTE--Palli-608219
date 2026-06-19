@@ -77,7 +77,7 @@
 		<div th:if="${isAdmin}">
 			<hr>
 			<h3>Amministrazione</h3>
-			<a th:href="@{'/admin/teams/' + ${team.id} + '/edit'}">Modifica Squadra</a>
+			<a th:href="@{'/admin/teams/' + ${team.id} + '/edit'}"><button type="button">Modifica Squadra</button></a>
 			<form th:action="@{'/admin/teams/' + ${team.id} + '/delete'}" method="POST" style="display:inline;">
 				<button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questa squadra?')">Elimina
 					Squadra</button>
