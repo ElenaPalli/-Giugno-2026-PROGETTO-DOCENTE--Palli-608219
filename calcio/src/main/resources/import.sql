@@ -31,16 +31,7 @@ insert into tournament_teams (tournaments_id, teams_id) values((select id from t
 insert into tournament_teams (tournaments_id, teams_id) values((select id from tournament where name = 'Coppa Italia' and year = 2026), (select id from team where name = 'Inter'));
 insert into tournament_teams (tournaments_id, teams_id) values((select id from tournament where name = 'Coppa Italia' and year = 2026), (select id from team where name = 'Roma'));
 
-
-insert into users (id, name, surname, username) values(nextval('users_seq'), 'Mario', 'Rossi', 'mario');
-insert into users (id, name, surname, username) values(nextval('users_seq'), 'Luigi', 'Bianchi', 'luigi');
-
-
-insert into credentials (id, username, password, "role", user_id) values(nextval('credentials_seq'), 'mario', '$2a$10$yWAIDyuEr78BBBFZ5cYh8.Nw4gUHFTRG5FwaWqNCGeOD8M4mh3.xy', 'DEFAULT', (select id from users where username = 'mario'));
-insert into credentials (id, username, password, "role", user_id) values(nextval('credentials_seq'), 'luigi', '$2a$10$yWAIDyuEr78BBBFZ5cYh8.Nw4gUHFTRG5FwaWqNCGeOD8M4mh3.xy', 'DEFAULT', (select id from users where username = 'luigi'));
-
 insert into users (id, name, surname, username) values(nextval('users_seq'), 'Admin', 'Calcio', 'admin');
 insert into credentials (id, username, password, "role", user_id) values(nextval('credentials_seq'), 'admin', '$2b$12$rVnIQJbZcoTKuq8yQYb/mux/cZZb1XesQ07sz8/Qp8rwSgVmZ1lHW', 'ADMIN', (select id from users where username = 'admin'));
-
 insert into users (id, name, surname, username) values(nextval('users_seq'), 'Elena', 'Bianchi', 'elena');
 insert into credentials (id, username, password, "role", user_id) values(nextval('credentials_seq'), 'elena', '$2b$12$HAzrLlUmEHPduDd5.w26c.t.IBxXk2eiz3160Y8me8cXUi/jQmrL2', 'DEFAULT', (select id from users where username = 'elena'));

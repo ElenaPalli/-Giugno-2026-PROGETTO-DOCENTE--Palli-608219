@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import it.uniroma3.siw.calcio.model.Comment;
 import it.uniroma3.siw.calcio.model.Match;
 import it.uniroma3.siw.calcio.model.MatchState;
+import it.uniroma3.siw.calcio.service.CommentService;
 import it.uniroma3.siw.calcio.service.MatchService;
 import it.uniroma3.siw.calcio.service.RefereeService;
 import it.uniroma3.siw.calcio.service.TeamService;
@@ -22,13 +24,15 @@ public class MatchController {
     private final TournamentService tournamentService;
     private final TeamService teamService;
     private final RefereeService refereeService;
+    private final CommentService commentService;
 
     public MatchController(MatchService matchService, TournamentService tournamentService, TeamService teamService,
-            RefereeService refereeService) {
+            RefereeService refereeService, CommentService commentService) {
         this.matchService = matchService;
         this.tournamentService = tournamentService;
         this.teamService = teamService;
         this.refereeService = refereeService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/matches")
@@ -39,7 +43,12 @@ public class MatchController {
 
     @GetMapping("/matches/{id}")
     public String show(@PathVariable Long id, Model model) {
-        model.addAttribute("match", matchService.findById(id).orElse(null));
+        Match match = matchService.findById(id).orElse(null); // optional ??
+        model.addAttribute("match", match);
+        if (match != null) {
+            model.addAttribute("comments", commentService.findByMatch(match));
+            model.addAttribute("newComment", new Comment());
+        }
         return "matches/showMatch";
     }
 
@@ -49,6 +58,7 @@ public class MatchController {
         model.addAttribute("tournaments", tournamentService.findAll());
         model.addAttribute("teams", teamService.findAll());
         model.addAttribute("referees", refereeService.findAll());
+        model.addAttribute("states", MatchState.values());
         return "admin/matches/form";
     }
 
@@ -58,6 +68,7 @@ public class MatchController {
             model.addAttribute("tournaments", tournamentService.findAll());
             model.addAttribute("teams", teamService.findAll());
             model.addAttribute("referees", refereeService.findAll());
+            model.addAttribute("states", MatchState.values());
             return "admin/matches/form";
         }
         matchService.save(match);

@@ -40,6 +40,44 @@
             </span>
         </div>
 
+        <hr>
+        <h3>Commenti</h3>
+
+        <div th:if="${comments != null and !comments.isEmpty()}">
+            <div th:each="c : ${comments}"
+                style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+                <strong th:text="${c.author.name} + ' ' + ${c.author.surname}">Utente</strong>:
+                <span th:text="${c.text}">Testo commento</span>
+
+                <div th:if="${userDetails != null and (userDetails.username == c.author.username or userDetails.authorities[0].authority == 'ADMIN')}"
+                    style="margin-top: 5px;">
+                    <a th:if="${userDetails.username == c.author.username}"
+                        th:href="@{'/user/comments/' + ${c.id} + '/edit'}"
+                        style="font-size: 0.9em; color: blue; margin-right: 10px;">Modifica</a>
+                    <form th:action="@{'/user/comments/' + ${c.id} + '/delete'}" method="POST" style="display:inline;">
+                        <button type="submit"
+                            style="font-size: 0.9em; color: red; border: none; background: none; cursor: pointer; padding: 0; text-decoration: underline;">Elimina</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div th:if="${comments == null or comments.isEmpty()}">
+            <p>Nessun commento presente per questa partita.</p>
+        </div>
+
+        <div th:if="${userDetails != null}" style="margin-top: 20px;">
+            <h4>Aggiungi un commento</h4>
+            <form th:action="@{'/user/matches/' + ${match.id} + '/comment'}" method="POST" th:object="${newComment}">
+                <textarea th:field="*{text}" required rows="3" cols="50"
+                    placeholder="Scrivi qui il tuo commento..."></textarea>
+                <br>
+                <button type="submit">Invia Commento</button>
+            </form>
+        </div>
+        <div th:if="${userDetails == null}">
+            <p><em><a href="/login">Accedi</a> per inserire un commento.</em></p>
+        </div>
+
         <div th:if="${isAdmin}">
             <hr>
             <h3>Amministrazione</h3>
