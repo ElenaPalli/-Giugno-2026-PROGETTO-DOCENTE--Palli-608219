@@ -7,9 +7,25 @@
 </head>
 
 <body>
-    <div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+	<header class="top-banner">
+		<div class="banner-logo">
+			<a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
+		</div>
+		<div class="banner-auth">
+			<div th:if="${userDetails != null}">
+				<span th:text="${userDetails.username}" class="username-display"></span>
+				<form th:action="@{/logout}" method="POST" style="display:inline;">
+					<button type="submit" class="btn-logout">Logout</button>
+				</form>
+			</div>
+			<div th:unless="${userDetails != null}">
+				<a href="/login"><button type="button" class="btn-login">Login</button></a>
+			</div>
+		</div>
+	</header>
+    
     <h1>Dettagli Partita</h1>
-    <div th:if="${match}">
+    <div th:if="${match}" class="content-card">
 
         <h2>
             <a th:href="@{'/teams/' + ${match.homeTeam.id}}" th:text="${match.homeTeam.name}">Squadra Casa</a>
@@ -43,20 +59,20 @@
         <hr>
         <h3>Commenti</h3>
 
-        <div th:if="${comments != null and !comments.isEmpty()}">
-            <div th:each="c : ${comments}"
-                style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-                <strong th:text="${c.author.name} + ' ' + ${c.author.surname}">Utente</strong>:
-                <span th:text="${c.text}">Testo commento</span>
+        <div th:if="${comments != null and !comments.isEmpty()}" class="comments-container">
+            <div th:each="c : ${comments}" class="comment-card">
+                <div class="comment-header">
+                    <strong th:text="${c.author.name} + ' ' + ${c.author.surname}">Utente</strong>
+                </div>
+                <div class="comment-body">
+                    <span th:text="${c.text}">Testo commento</span>
+                </div>
 
-                <div th:if="${userDetails != null and (userDetails.username == c.author.username or userDetails.authorities[0].authority == 'ADMIN')}"
-                    style="margin-top: 5px;">
+                <div th:if="${userDetails != null and (userDetails.username == c.author.username or userDetails.authorities[0].authority == 'ADMIN')}" class="comment-actions">
                     <a th:if="${userDetails.username == c.author.username}"
-                        th:href="@{'/user/comments/' + ${c.id} + '/edit'}"
-                        style="font-size: 0.9em; color: blue; margin-right: 10px;">Modifica</a>
+                        th:href="@{'/user/comments/' + ${c.id} + '/edit'}" class="btn-text edit">Modifica</a>
                     <form th:action="@{'/user/comments/' + ${c.id} + '/delete'}" method="POST" style="display:inline;">
-                        <button type="submit"
-                            style="font-size: 0.9em; color: red; border: none; background: none; cursor: pointer; padding: 0; text-decoration: underline;">Elimina</button>
+                        <button type="submit" class="btn-text delete">Elimina</button>
                     </form>
                 </div>
             </div>

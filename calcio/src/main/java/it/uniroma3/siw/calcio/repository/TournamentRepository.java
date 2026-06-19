@@ -26,8 +26,10 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
             "ORDER BY goalsFor DESC", nativeQuery = true)
     List<RankingRow> calculateTournamentRanking(@Param("tournamentId") Long tournamentId);
 
-    // EntityGraph è l'approccio ideale e dichiarativo per evitare N+1 Select
-    // quando dobbiamo pre-caricare una singola collezione (in questo caso 'matches').
-    @EntityGraph(attributePaths = {"matches"})
-    Optional<Tournament> findByIdWithMatches(Long id);
+    // EntityGraph serve per evitare N+1 Select quando si deve pre-caricare una
+    // singola collezione
+    // (in questo caso 'matches').
+    @EntityGraph(attributePaths = { "matches" })
+    @Query("SELECT t FROM Tournament t WHERE t.id = :id")
+    Optional<Tournament> findByIdWithMatches(@Param("id") Long id);
 }

@@ -1,33 +1,310 @@
-body { 
-    font-family: "Geneva";
-    color:dimgrey;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-color: #f8f4fb;
+  --text-main: rgb(14, 30, 56);
+  --text-muted: #888888;
+  --card-bg: #ffffff;
+  --card-border: #efefef;
 }
 
-a { 
-	text-decoration: none; 
-    color: darkgrey;
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px 100px 40px;
+  overflow-x: hidden;
 }
 
-a:hover { 
-	text-decoration: underline; 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Top Banner */
+.top-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(233, 233, 231);
+  padding: 15px calc(50vw - 50% + 40px);
+  margin: 0 calc(50% - 50vw - 40px) 40px calc(50% - 50vw - 40px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.banner-logo img {
+  max-height: 70px;
+  width: auto;
+  transition: transform 0.2s ease;
+  display: block;
+}
+
+.banner-logo img:hover {
+  transform: scale(1.05);
+}
+
+.banner-auth {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.banner-auth .username-display {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-main);
+}
+
+.banner-auth .btn-login,
+.banner-auth .btn-logout {
+  margin: 0;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+/* Heading */
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 60px;
+  letter-spacing: -1.5px;
+}
+
+
+
+/* Cards Container Grid */
+body>div:has(> a[href="/tournaments"]),
+body>div:has(> a[href="/teams"]),
+body>div:has(> a[href="/players"]),
+body>div:has(> a[href="/matches"]),
+body>div:has(> a[href="/referees"]) {
+  display: inline-block;
+  width: calc(33.333% - 20px);
+  margin-right: 20px;
+  margin-bottom: 30px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  vertical-align: top;
+  position: relative;
+}
+
+body>div:has(> a[href="/tournaments"]):hover,
+body>div:has(> a[href="/teams"]):hover,
+body>div:has(> a[href="/players"]):hover,
+body>div:has(> a[href="/matches"]):hover,
+body>div:has(> a[href="/referees"]):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+body>div:has(> a[href="/tournaments"]) a,
+body>div:has(> a[href="/teams"]) a,
+body>div:has(> a[href="/players"]) a,
+body>div:has(> a[href="/matches"]) a,
+body>div:has(> a[href="/referees"]) a {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  font-size: 22px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+
+/* Make lists look like the homepage cards */
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+li {
+  width: calc(33.333% - 14px);
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+li:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+li a {
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+li span {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 label {
-	width: 8em;
-	display: inline-block;
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text-muted);
 }
 
-header {
-  background-color: rgb(98, 192, 144);
-  color: white;
-  height: 1.5em;
-  margin-bottom: 0.5em;
-  padding: 0.2em;
-  text-align: right; 
+input[type="text"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background: #fdfdfd;
 }
 
-header a { 
-	text-decoration: none; 
-    color: white;
-    font-size: 0.6em;
+button,
+input[type="submit"] {
+  background-color: var(--text-main);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background-color: #333;
+}
+
+button:active,
+input[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Comment Styles */
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.comment-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.comment-header {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.comment-body {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-text {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.btn-text.edit {
+  color: #3b82f6 !important;
+}
+
+.btn-text.delete {
+  color: #ef4444 !important;
+}
+
+.btn-text:hover {
+  text-decoration: underline;
+  background: transparent !important;
+}
+
+/* Detail View Layout */
+.content-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--card-border);
+  margin-bottom: 40px;
+}
+
+.content-card h2 {
+  margin-top: 0;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.content-card > div {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.content-card > div > strong {
+  font-weight: 600;
+  color: var(--text-main);
+  margin-right: 8px;
 }

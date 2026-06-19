@@ -9,21 +9,25 @@
 </head>
 
 <body>
-	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<form th:action="@{/logout}" method="POST" style="display:inline;">
-				<button type="submit">Logout</button>
-			</form>
+	<header class="top-banner">
+		<div class="banner-logo">
+			<a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
 		</div>
-		<div th:unless="${userDetails}">
-			<a href="/login">Login</a>
+		<div class="banner-auth">
+			<div th:if="${userDetails != null}">
+				<span th:text="${userDetails.username}" class="username-display"></span>
+				<form th:action="@{/logout}" method="POST" style="display:inline;">
+					<button type="submit" class="btn-logout">Logout</button>
+				</form>
+			</div>
+			<div th:unless="${userDetails != null}">
+				<a href="/login"><button type="button" class="btn-login">Login</button></a>
+			</div>
 		</div>
 	</header>
+	
 
-	<div>
-		<a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
-	</div>
+	
 	<h1>Login</h1>
 	<form th:action="@{/login}" method="POST">
 			<div>

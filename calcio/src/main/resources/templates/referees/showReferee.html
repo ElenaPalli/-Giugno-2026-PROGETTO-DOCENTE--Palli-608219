@@ -7,10 +7,26 @@
 </head>
 
 <body>
-    <div><a href="/"><img src="/images/logo-siw.png" width="50%" /></a></div>
+	<header class="top-banner">
+		<div class="banner-logo">
+			<a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
+		</div>
+		<div class="banner-auth">
+			<div th:if="${userDetails != null}">
+				<span th:text="${userDetails.username}" class="username-display"></span>
+				<form th:action="@{/logout}" method="POST" style="display:inline;">
+					<button type="submit" class="btn-logout">Logout</button>
+				</form>
+			</div>
+			<div th:unless="${userDetails != null}">
+				<a href="/login"><button type="button" class="btn-login">Login</button></a>
+			</div>
+		</div>
+	</header>
+    
     <h1>Dettagli Arbitro</h1>
 
-    <div th:if="${referee}">
+    <div th:if="${referee}" class="content-card">
         <p><strong>Nome:</strong> <span th:text="${referee.name}">Nome</span></p>
         <p><strong>Cognome:</strong> <span th:text="${referee.surname}">Cognome</span></p>
         <p><strong>Codice Arbitrale:</strong> <span th:text="${referee.refereeCode}">Codice</span></p>

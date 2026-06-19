@@ -17,9 +17,9 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findByAwayTeam(Team awayTeam);
 
     // Utilizziamo una @Query con JOIN FETCH espliciti invece di @EntityGraph.
-    // In questo caso, essendo 'teamHome', 'teamAway' e 'referee' relazioni verso singole entità (ManyToOne),
-    // possiamo pre-caricarle tutte insieme in una singola mega-query senza innescare la MultipleBagFetchException.
-    // Il LEFT JOIN su 'comments' permette di recuperare anche le partite sprovviste di commenti.
-    @Query("SELECT m FROM Match m JOIN FETCH m.teamHome JOIN FETCH m.teamAway JOIN FETCH m.referee LEFT JOIN FETCH m.comments WHERE m.id = :id")
+    // In questo caso, essendo 'homeTeam', 'awayTeam' e 'referee' relazioni verso
+    // singole entità (ManyToOne),
+    // possiamo pre-caricarle tutte insieme in una singola query più grande
+    @Query("SELECT m FROM Match m JOIN FETCH m.homeTeam JOIN FETCH m.awayTeam JOIN FETCH m.referee WHERE m.id = :id")
     Optional<Match> findByIdWithDetails(@Param("id") Long id);
 }
