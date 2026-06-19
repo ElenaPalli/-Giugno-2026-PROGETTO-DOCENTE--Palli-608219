@@ -2,7 +2,11 @@ package it.uniroma3.siw.calcio.repository;
 
 import java.util.List;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import it.uniroma3.siw.calcio.model.Match;
 import it.uniroma3.siw.calcio.model.Team;
@@ -11,4 +15,11 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findByHomeTeam(Team homeTeam);
 
     List<Match> findByAwayTeam(Team awayTeam);
+
+    // Utilizziamo una @Query con JOIN FETCH espliciti invece di @EntityGraph.
+    // In questo caso, essendo 'teamHome', 'teamAway' e 'referee' relazioni verso singole entità (ManyToOne),
+    // possiamo pre-caricarle tutte insieme in una singola mega-query senza innescare la MultipleBagFetchException.
+    // Il LEFT JOIN su 'comments' permette di recuperare anche le partite sprovviste di commenti.
+    @Query("SELECT m FROM Match m JOIN FETCH m.teamHome JOIN FETCH m.teamAway JOIN FETCH m.referee LEFT JOIN FETCH m.comments WHERE m.id = :id")
+    Optional<Match> findByIdWithDetails(@Param("id") Long id);
 }

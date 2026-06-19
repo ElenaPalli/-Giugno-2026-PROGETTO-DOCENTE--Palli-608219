@@ -37,6 +37,17 @@ public class TournamentService {
     }
 
     @Transactional(readOnly = true)
+    public Optional<Tournament> findByIdWithMatches(Long id) {
+        Optional<Tournament> tournamentOpt = this.tournamentRepository.findByIdWithMatches(id);
+        if (tournamentOpt.isPresent()) {
+            Tournament tournament = tournamentOpt.get();
+            if (tournament.getTeams() != null)
+                tournament.getTeams().size();
+        }
+        return tournamentOpt;
+    }
+
+    @Transactional(readOnly = true)
     public List<Tournament> findAll() {
         return (List<Tournament>) tournamentRepository.findAll();
     }

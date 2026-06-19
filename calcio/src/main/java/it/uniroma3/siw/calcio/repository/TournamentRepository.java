@@ -1,7 +1,9 @@
 package it.uniroma3.siw.calcio.repository;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +25,9 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
             "GROUP BY t.id, t.name " +
             "ORDER BY goalsFor DESC", nativeQuery = true)
     List<RankingRow> calculateTournamentRanking(@Param("tournamentId") Long tournamentId);
+
+    // EntityGraph è l'approccio ideale e dichiarativo per evitare N+1 Select
+    // quando dobbiamo pre-caricare una singola collezione (in questo caso 'matches').
+    @EntityGraph(attributePaths = {"matches"})
+    Optional<Tournament> findByIdWithMatches(Long id);
 }

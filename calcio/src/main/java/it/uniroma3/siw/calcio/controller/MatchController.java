@@ -43,7 +43,7 @@ public class MatchController {
 
     @GetMapping("/matches/{id}")
     public String show(@PathVariable Long id, Model model) {
-        Match match = matchService.findById(id).orElse(null); // optional ??
+        Match match = matchService.findByIdWithDetails(id).orElse(null); // optional ??
         model.addAttribute("match", match);
         if (match != null) {
             model.addAttribute("comments", commentService.findByMatch(match));

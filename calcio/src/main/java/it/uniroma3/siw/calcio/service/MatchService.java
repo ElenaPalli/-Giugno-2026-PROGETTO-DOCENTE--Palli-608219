@@ -31,6 +31,11 @@ public class MatchService {
     }
 
     @Transactional(readOnly = true)
+    public Optional<Match> findByIdWithDetails(Long id) {
+        return matchRepository.findByIdWithDetails(id);
+    }
+
+    @Transactional(readOnly = true)
     public List<Match> findAll() {
         return (List<Match>) matchRepository.findAll();
     }

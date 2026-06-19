@@ -55,6 +55,26 @@ public class TeamService {
         return teamOpt;
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Team> findByIdWithPlayers(Long id) {
+        Optional<Team> teamOpt = this.teamRepository.findByIdWithPlayers(id);
+        if (teamOpt.isPresent()) {
+            Team team = teamOpt.get();
+            // IMPORTANTE: Poiché in JPA/Hibernate non possiamo fare il fetch simultaneo di più collezioni di tipo List
+            // (come players, homeMatches, awayMatches) altrimenti scateniamo una MultipleBagFetchException,
+            // usiamo un approccio ibrido: 'players' viene caricato con @EntityGraph nella query SQL principale,
+            // mentre 'homeMatches', 'awayMatches' e 'tournaments' vengono caricati lazy qui, invocando .size() 
+            // finché la transazione è ancora aperta grazie a @Transactional.
+            if (team.getHomeMatches() != null)
+                team.getHomeMatches().size();
+            if (team.getAwayMatches() != null)
+                team.getAwayMatches().size();
+            if (team.getTournaments() != null)
+                team.getTournaments().size();
+        }
+        return teamOpt;
+    }
+
     @Transactional
     public Team save(Team team) throws DuplicateTeamException {
         boolean duplicate = team.getId() == null
