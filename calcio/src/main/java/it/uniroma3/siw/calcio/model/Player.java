@@ -2,36 +2,44 @@ package it.uniroma3.siw.calcio.model;
 
 import java.time.LocalDate;
 
+import it.uniroma3.siw.calcio.validation.NotFutureYear;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
+
 @Entity
 public class Player {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String name;
+    @NotBlank
     private String surname;
+    @Past
     private LocalDate dateOfBirth;
-    private int height;  //in cm
-
+    @Min(100)
+    @Max(250)
+    private int height; // in cm
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @ManyToOne
     private Team team;
 
-
-
-
-
-    //getters e setters
+    // getters e setters
     public Long getId() {
         return id;
     }
@@ -88,8 +96,7 @@ public class Player {
         this.team = team;
     }
 
-
-    //hashCode e equals
+    // hashCode e equals
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -127,8 +134,4 @@ public class Player {
         return true;
     }
 
-
-
-
-    
 }

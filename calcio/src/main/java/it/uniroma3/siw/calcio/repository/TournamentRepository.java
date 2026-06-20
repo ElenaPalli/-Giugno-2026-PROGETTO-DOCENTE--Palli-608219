@@ -32,4 +32,8 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
     @EntityGraph(attributePaths = { "matches" })
     @Query("SELECT t FROM Tournament t WHERE t.id = :id")
     Optional<Tournament> findByIdWithMatches(@Param("id") Long id);
+
+    boolean existsByNameAndYear(String name, int year);
+
+    boolean existsByNameAndYearAndIdNot(String name, int year, Long id);
 }

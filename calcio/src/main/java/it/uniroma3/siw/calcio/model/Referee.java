@@ -7,28 +7,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Referee {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String name;
+    @NotBlank
     private String surname;
+    @NotBlank
     private String refereeCode;
 
     @OneToMany(mappedBy = "referee")
     @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Match> refereedMatches;
 
-
-
-
-
-
-    //getters e setters
+    // getters e setters
     public Long getId() {
         return id;
     }
@@ -69,8 +68,7 @@ public class Referee {
         this.refereedMatches = refereedMatches;
     }
 
-
-    //hashCode e equals
+    // hashCode e equals
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -107,5 +105,5 @@ public class Referee {
             return false;
         return true;
     }
-    
+
 }
