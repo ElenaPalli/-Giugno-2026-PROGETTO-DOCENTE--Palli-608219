@@ -13,7 +13,7 @@
 		</div>
 		<div class="banner-auth">
 			<div th:if="${userDetails != null}">
-				<span th:text="${userDetails.username}" class="username-display"></span>
+				<span th:text="${loggedUsername}" class="username-display"></span>
 				<form th:action="@{/logout}" method="POST" style="display:inline;">
 					<button type="submit" class="btn-logout">Logout</button>
 				</form>
