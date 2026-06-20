@@ -235,6 +235,15 @@ input[type="submit"]:active {
   transform: scale(0.98);
 }
 
+.btn-danger {
+  background-color: #8B0000 !important;
+  color: #fff !important;
+}
+
+.btn-danger:hover {
+  background-color: #600000 !important;
+}
+
 /* Comment Styles */
 .comments-container {
   display: flex;
@@ -284,7 +293,7 @@ input[type="submit"]:active {
 }
 
 .btn-text.edit {
-  color: #3b82f6 !important;
+  color: var(--text-main) !important;
 }
 
 .btn-text.delete {
@@ -340,12 +349,13 @@ input[type="submit"]:active {
 .styled-table thead tr {
   background-color: var(--text-main);
   color: #ffffff;
-  text-align: left;
+  text-align: center;
 }
 
 .styled-table th,
 .styled-table td {
   padding: 12px 15px;
+  text-align: center;
 }
 
 .styled-table th:not(:last-child),
@@ -353,10 +363,7 @@ input[type="submit"]:active {
   border-right: 1px solid var(--card-border);
 }
 
-.styled-table th:last-child,
-.styled-table td:last-child {
-  text-align: center;
-}
+
 
 .styled-table tbody tr {
   border-bottom: 1px solid var(--card-border);

@@ -78,12 +78,14 @@
 			<table class="styled-table" th:if="${not #lists.isEmpty(ranking)}">
 				<thead>
 					<tr>
+						<th>Posizione</th>
 						<th>Squadra</th>
 						<th>Gol Fatti</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="row : ${ranking}">
+					<tr th:each="row, iterStat : ${ranking}">
+						<td th:text="${iterStat.count} + '°'">1°</td>
 						<td>
 							<a th:href="@{'/teams' + '/' + ${row.teamId}}" th:text="${row.teamName}">Nome</a>
 						</td>
@@ -101,8 +103,8 @@
 					Torneo</button></a>
 			<form th:action="@{'/admin/tournaments/' + ${tournament.id} + '/delete'}" method="POST"
 				style="display:inline;">
-				<button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo torneo?')">Elimina
-					Torneo</button>
+				<button type="submit" class="btn-danger"
+					onclick="return confirm('Sei sicuro di voler eliminare questo torneo?')">Elimina Torneo</button>
 			</form>
 		</div>
 

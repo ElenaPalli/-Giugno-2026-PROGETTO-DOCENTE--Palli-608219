@@ -36,7 +36,7 @@
             <h3>Amministrazione</h3>
             <a th:href="@{'/admin/referees/' + ${referee.id} + '/edit'}"><button type="button">Modifica Arbitro</button></a>
             <form th:action="@{'/admin/referees/' + ${referee.id} + '/delete'}" method="POST" style="display:inline;">
-                <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo arbitro?')">Elimina
+                <button type="submit" class="btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questo arbitro?')">Elimina
                     Arbitro</button>
             </form>
         </div>
@@ -46,10 +46,7 @@
         L'arbitro richiesto non esiste.
     </div>
 
-    <div>
-        <br>
-        <a href="/referees/react">Torna all'elenco degli arbitri</a>
-    </div>
+
 </body>
 
 </html>

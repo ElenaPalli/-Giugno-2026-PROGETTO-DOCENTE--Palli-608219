@@ -79,7 +79,7 @@
                     <a th:if="${userDetails.username == c.author.username}"
                         th:href="@{'/user/comments/' + ${c.id} + '/edit'}" class="btn-text edit">Modifica</a>
                     <form th:action="@{'/user/comments/' + ${c.id} + '/delete'}" method="POST" style="display:inline;">
-                        <button type="submit" class="btn-text delete">Elimina</button>
+                        <button type="submit" class="btn-danger">Elimina</button>
                     </form>
                 </div>
             </div>
@@ -106,7 +106,7 @@
             <h3>Amministrazione</h3>
             <a th:href="@{'/admin/matches/' + ${match.id} + '/edit'}"><button type="button">Modifica Risultato/Partita</button></a>
             <form th:action="@{'/admin/matches/' + ${match.id} + '/delete'}" method="POST" style="display:inline;">
-                <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questa partita?')">Elimina
+                <button type="submit" class="btn-danger" onclick="return confirm('Sei sicuro di voler eliminare questa partita?')">Elimina
                     Partita</button>
             </form>
         </div>
