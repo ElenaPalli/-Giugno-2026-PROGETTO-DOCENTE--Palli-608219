@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.uniroma3.siw.calcio.exception.DuplicateTeamException;
 import it.uniroma3.siw.calcio.model.Team;
 import it.uniroma3.siw.calcio.model.Player;
 import it.uniroma3.siw.calcio.service.TeamService;
@@ -108,7 +107,8 @@ public class TeamController {
             return "redirect:/teams";
         }
         Team team = optional.get();
-        if (team.getPlayers() == null) team.setPlayers(new ArrayList<>());
+        if (team.getPlayers() == null)
+            team.setPlayers(new ArrayList<>());
         model.addAttribute("team", team);
         model.addAttribute("players", playerService.findAll());
         return "admin/teams/form";

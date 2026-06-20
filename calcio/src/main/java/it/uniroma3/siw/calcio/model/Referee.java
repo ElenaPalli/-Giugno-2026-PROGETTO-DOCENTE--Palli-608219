@@ -20,6 +20,7 @@ public class Referee {
     private String refereeCode;
 
     @OneToMany(mappedBy = "referee")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Match> refereedMatches;
 
 

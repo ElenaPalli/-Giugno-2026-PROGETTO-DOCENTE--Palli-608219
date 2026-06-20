@@ -2,10 +2,8 @@
 <html>
 
 <head>
-	<title>
-		SiwCalcio - Homepage
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+    <title>Arbitri (React)</title>
+    <link rel="stylesheet" href="/css/stile.css" />
 </head>
 
 <body>
@@ -25,29 +23,19 @@
 			</div>
 		</div>
 	</header>
-	
-	
-	<h1>Consulta</h1>
+    
+    <!-- React Mount Point -->
+    <div id="react-referees-root"></div>
 
-	<div>
-		<a href="/tournaments">Tornei</a>
-	</div>
-	<div>
-		<a href="/teams">Squadre</a>
-	</div>
-	<div>
-		<a href="/players">Giocatori</a>
-	</div>
-	<div>
-		<a href="/matches">Partite</a>
-	</div>
-	<div>
-		<a href="/referees/react">Arbitri</a>
-	</div>
+    <!-- Data Injection for React -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.SIW_REFEREES_DATA = /*[[${referees}]]*/ [];
+        /*]]>*/
+    </script>
 
-
-
+    <!-- React App Bundle (built by Vite) -->
+    <script type="module" src="/js/react/react-referees.js"></script>
 
 </body>
-
 </html>

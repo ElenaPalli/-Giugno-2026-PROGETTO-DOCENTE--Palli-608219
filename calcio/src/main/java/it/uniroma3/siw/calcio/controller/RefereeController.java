@@ -26,6 +26,12 @@ public class RefereeController {
         return "referees/listReferee";
     }
 
+    @GetMapping("/referees/react")
+    public String reactReferees(Model model) {
+        model.addAttribute("referees", refereeService.findAll());
+        return "referees/reactReferees";
+    }
+
     @GetMapping("/referees/{id}")
     public String show(@PathVariable Long id, Model model) {
         model.addAttribute("referee", refereeService.findById(id).orElse(null));
