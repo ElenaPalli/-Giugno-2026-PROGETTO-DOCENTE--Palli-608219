@@ -5,7 +5,7 @@
   --text-main: rgb(14, 30, 56);
   --text-muted: #888888;
   --card-bg: #ffffff;
-  --card-border: #efefef;
+  --card-border: var(--text-main);
 }
 
 body {
@@ -122,10 +122,14 @@ body>div:has(> a[href="/referees"]) a,
 body>div:has(> a[href="/referees/react"]) a {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 24px 0;
   font-size: 22px;
   font-weight: 700;
   box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 
@@ -152,12 +156,15 @@ li {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 24px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
   font-size: 18px;
   font-weight: 600;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 li:hover {
@@ -168,12 +175,18 @@ li:hover {
 li a {
   color: var(--text-main);
   text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 li span {
   font-size: 14px;
   color: var(--text-muted);
   font-weight: 400;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 label {
@@ -310,4 +323,122 @@ input[type="submit"]:active {
   font-weight: 600;
   color: var(--text-main);
   margin-right: 8px;
+}
+
+/* Tables */
+.styled-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 15px 0;
+  font-size: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+
+.styled-table thead tr {
+  background-color: var(--text-main);
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
+
+.styled-table th:not(:last-child),
+.styled-table td:not(:last-child) {
+  border-right: 1px solid var(--card-border);
+}
+
+.styled-table th:last-child,
+.styled-table td:last-child {
+  text-align: center;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid var(--card-border);
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: none;
+}
+
+.styled-table tbody tr:hover {
+  background-color: rgba(14, 30, 56, 0.05);
+}
+
+.styled-table a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.styled-table a:hover {
+  text-decoration: underline;
+}
+
+/* Match List Layout */
+.match-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.match-date {
+  font-size: 14px;
+  color: var(--text-main);
+  font-weight: 600;
+  width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.match-card {
+  flex-grow: 1;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--card-border);
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  display: block;
+}
+
+.match-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Colore primario scuro (Sfondo blu scuro, testo bianco) */
+.bg-primary-dark {
+  background-color: var(--text-main) !important;
+  color: #ffffff !important;
+}
+
+.bg-primary-dark a,
+.bg-primary-dark span {
+  color: #ffffff !important;
+}
+
+/* Colore grigio banner (Sfondo grigio, testo blu) */
+.bg-banner-style {
+  background-color: rgb(233, 233, 231) !important;
+  color: var(--text-main) !important;
+}
+
+.bg-banner-style a,
+.bg-banner-style span {
+  color: var(--text-main) !important;
 }

@@ -23,15 +23,22 @@
 			</div>
 		</div>
 	</header>
-	
-	<h1>Dettagli Team</h1>
+
+	<h1>Dettagli Squadra</h1>
 	<div th:if="${team}" class="content-card">
 
-		<span th:text="${team.name}">Roma</span>
+		<div style="text-align: center; margin-bottom: 40px;">
+			<h2 th:text="${team.name}" style="font-weight: bold; margin-bottom: 10px;">Nome Squadra</h2>
+		</div>
 
-		<span th:text="'(' + ${team.yearFoundation} + ')'">2000</span>
-
-		<span th:text="'(' + ${team.city} + ')'">Acilia</span>
+		<div style="margin-bottom: 25px;">
+			<div style="margin-bottom: 5px;">
+				<span th:text="'Anno di fondazione: ' + ${team.yearFoundation}" style="font-weight: 600;">Anno di fondazione: 2000</span>
+			</div>
+			<div>
+				<span th:text="'Città: ' + ${team.city}" style="font-weight: 600;">Città: Roma</span>
+			</div>
+		</div>
 
 		<!-- <span><img width="5%" th:src="${team.urlImage}" alt="Immagine della squadra" /></span> -->
 
@@ -46,7 +53,7 @@
 		<div>
 			<strong>Giocatori:</strong>
 			<ul th:if="${not #lists.isEmpty(team.players)}">
-				<li th:each="player : ${team.players}">
+				<li th:each="player : ${team.players}" class="bg-banner-style">
 					<a th:href="@{'/players' + '/' + ${player.id}}"
 						th:text="${player.name} + ' ' + ${player.surname}">Nome Cognome</a>
 				</li>
@@ -55,36 +62,34 @@
 		</div>
 
 		<div>
-			<strong>Partite in casa:</strong>
-			<ul th:if="${not #lists.isEmpty(team.homeMatches)}">
-				<li th:each="match : ${team.homeMatches}">
-					<a th:href="@{'/matches/' + ${match.id}}">
+			<strong style="display: block; margin-bottom: 15px; margin-top: 20px;">Partite in casa:</strong>
+			<div th:if="${not #lists.isEmpty(team.homeMatches)}" class="match-list">
+				<div th:each="match : ${team.homeMatches}" class="match-row">
+					<div class="match-date" th:text="${match.date} + ':'">2025-01-01:</div>
+					<a th:href="@{'/matches/' + ${match.id}}" class="match-card bg-banner-style">
 						<span th:if="${match.state.name() != 'PLAYED'}"
 							th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</span>
 						<span th:if="${match.state.name() == 'PLAYED'}"
-							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
-							3 - 1 Lazio</span>
+							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma 3 - 1 Lazio</span>
 					</a>
-					<span th:text="' (' + ${match.date} + ')'"></span>
-				</li>
-			</ul>
+				</div>
+			</div>
 			<span th:if="${#lists.isEmpty(team.homeMatches)}">Nessuna partita in casa.</span>
 		</div>
 
 		<div>
-			<strong>Partite fuori casa:</strong>
-			<ul th:if="${not #lists.isEmpty(team.awayMatches)}">
-				<li th:each="match : ${team.awayMatches}">
-					<a th:href="@{'/matches/' + ${match.id}}">
+			<strong style="display: block; margin-bottom: 15px; margin-top: 20px;">Partite fuori casa:</strong>
+			<div th:if="${not #lists.isEmpty(team.awayMatches)}" class="match-list">
+				<div th:each="match : ${team.awayMatches}" class="match-row">
+					<div class="match-date" th:text="${match.date} + ':'">2025-01-01:</div>
+					<a th:href="@{'/matches/' + ${match.id}}" class="match-card bg-banner-style">
 						<span th:if="${match.state.name() != 'PLAYED'}"
 							th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</span>
 						<span th:if="${match.state.name() == 'PLAYED'}"
-							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
-							3 - 1 Lazio</span>
+							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma 3 - 1 Lazio</span>
 					</a>
-					<span th:text="' (' + ${match.date} + ')'"></span>
-				</li>
-			</ul>
+				</div>
+			</div>
 			<span th:if="${#lists.isEmpty(team.awayMatches)}">Nessuna partita fuori casa.</span>
 		</div>
 

@@ -23,20 +23,24 @@
 			</div>
 		</div>
 	</header>
-	
+
 	<h1>Dettagli Torneo</h1>
 	<div th:if="${tournament}" class="content-card">
 
-		<span th:text="${tournament.name}">Nome Torneo</span>
+		<div style="text-align: center; margin-bottom: 40px;">
+			<h2 th:text="${tournament.name}" style="font-weight: bold; margin-bottom: 10px;">Nome Torneo</h2>
+			<p th:text="${tournament.description}" style="font-size: 14px; font-weight: normal; margin-top: 0;">
+				descrizione</p>
+		</div>
 
-		<span th:text="'(' + ${tournament.year} + ')'">2025</span>
-
-		<p th:text="${tournament.description}">descrizione</p>
+		<div style="margin-bottom: 15px;">
+			<span th:text="'Anno: ' + ${tournament.year}" style="font-weight: 600;">Anno: 2025</span>
+		</div>
 
 		<div>
 			<strong>Squadre Iscritte:</strong>
 			<ul th:if="${not #lists.isEmpty(tournament.teams)}">
-				<li th:each="team : ${tournament.teams}">
+				<li th:each="team : ${tournament.teams}" class="bg-banner-style">
 					<a th:href="@{'/teams' + '/' + ${team.id}}" th:text="${team.name}">Nome squadra</a>
 				</li>
 			</ul>
@@ -44,33 +48,34 @@
 		</div>
 
 		<div>
-			<strong>Partite Già Effettuate:</strong>
-			<ul th:if="${not #lists.isEmpty(playedMatches)}">
-				<li th:each="match : ${playedMatches}">
-					<a th:href="@{'/matches' + '/' + ${match.id}}"
-						th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
-						3 - 1 Lazio</a>
-					<span th:text="' (' + ${match.date} + ')'"></span>
-				</li>
-			</ul>
+			<strong style="display: block; margin-bottom: 15px;">Partite effettuate:</strong>
+			<div th:if="${not #lists.isEmpty(playedMatches)}" class="match-list">
+				<div th:each="match : ${playedMatches}" class="match-row">
+					<div class="match-date" th:text="${match.date} + ':'">2025-01-01:</div>
+					<a th:href="@{'/matches' + '/' + ${match.id}}" class="match-card bg-banner-style">
+						<span th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma 3 - 1 Lazio</span>
+					</a>
+				</div>
+			</div>
 			<span th:if="${#lists.isEmpty(playedMatches)}">Nessuna partita effettuata.</span>
 		</div>
 
 		<div>
-			<strong>Partite da Effettuare:</strong>
-			<ul th:if="${not #lists.isEmpty(scheduledMatches)}">
-				<li th:each="match : ${scheduledMatches}">
-					<a th:href="@{'/matches' + '/' + ${match.id}}"
-						th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</a>
-					<span th:text="' (' + ${match.date} + ')'"></span>
-				</li>
-			</ul>
+			<strong style="display: block; margin-bottom: 15px; margin-top: 20px;">Partite in programma:</strong>
+			<div th:if="${not #lists.isEmpty(scheduledMatches)}" class="match-list">
+				<div th:each="match : ${scheduledMatches}" class="match-row">
+					<div class="match-date" th:text="${match.date} + ':'">2025-01-01:</div>
+					<a th:href="@{'/matches' + '/' + ${match.id}}" class="match-card bg-banner-style">
+						<span th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</span>
+					</a>
+				</div>
+			</div>
 			<span th:if="${#lists.isEmpty(scheduledMatches)}">Nessuna partita da effettuare.</span>
 		</div>
 
 		<div>
-			<strong>Classifica (Gol Fatti):</strong>
-			<table border="1" th:if="${not #lists.isEmpty(ranking)}">
+			<strong>Classifica:</strong>
+			<table class="styled-table" th:if="${not #lists.isEmpty(ranking)}">
 				<thead>
 					<tr>
 						<th>Squadra</th>
@@ -92,7 +97,8 @@
 		<div th:if="${isAdmin}">
 			<hr>
 			<h3>Amministrazione</h3>
-			<a th:href="@{'/admin/tournaments/' + ${tournament.id} + '/edit'}"><button type="button">Modifica Torneo</button></a>
+			<a th:href="@{'/admin/tournaments/' + ${tournament.id} + '/edit'}"><button type="button">Modifica
+					Torneo</button></a>
 			<form th:action="@{'/admin/tournaments/' + ${tournament.id} + '/delete'}" method="POST"
 				style="display:inline;">
 				<button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questo torneo?')">Elimina

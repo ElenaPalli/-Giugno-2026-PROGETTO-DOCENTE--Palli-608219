@@ -37,23 +37,30 @@
 
         <div>
             <strong>Torneo:</strong>
-            <span th:if="${match.tournament}">
-                <a th:href="@{'/tournaments/' + ${match.tournament.id}}" th:text="${match.tournament.name}">Torneo</a>
-            </span>
+            <ul th:if="${match.tournament}">
+                <li class="bg-banner-style">
+                    <a th:href="@{'/tournaments/' + ${match.tournament.id}}" th:text="${match.tournament.name}">Torneo</a>
+                </li>
+            </ul>
         </div>
         <div>
             <strong>Data e Ora:</strong> <span th:text="${match.date} + ' alle ' + ${match.time}">01/01/2025
                 20:45</span>
         </div>
         <div>
-            <strong>Stato:</strong> <span th:text="${match.state}">PROGRAMMATA</span>
+            <strong>Stato:</strong> 
+            <span th:if="${match.state.name() == 'PLAYED'}">CONCLUSA</span>
+            <span th:if="${match.state.name() == 'SCHEDULED'}">IN PROGRAMMA</span>
+            <span th:if="${match.state.name() == 'ONGOING'}">IN CORSO</span>
         </div>
         <div>
             <strong>Arbitro:</strong>
-            <span th:if="${match.referee}">
-                <a th:href="@{'/referees/' + ${match.referee.id}}"
-                    th:text="${match.referee.name} + ' ' + ${match.referee.surname}">Nome Arbitro</a>
-            </span>
+            <ul th:if="${match.referee}">
+                <li class="bg-banner-style">
+                    <a th:href="@{'/referees/' + ${match.referee.id}}"
+                        th:text="${match.referee.name} + ' ' + ${match.referee.surname}">Nome Arbitro</a>
+                </li>
+            </ul>
         </div>
 
         <hr>
