@@ -25,8 +25,9 @@
 	</header>
     
     <h1>Aggiungi Squadra</h1>
-    <form th:action="@{/admin/teams}" method="POST" th:object="${team}">
+    <form th:action="@{/admin/teams}" method="POST" th:object="${team}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{logo}" />
         <div th:if="${#fields.hasGlobalErrors()}">
             <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" style="color:red">...</p>
         </div>
@@ -41,6 +42,10 @@
         <div>
             <label>Città:</label> <input type="text" th:field="${team.city}" />
             <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+        </div>
+        <div>
+            <label>Logo:</label> 
+            <input type="file" name="logoFile" accept="image/*" />
         </div>
         <div><button type="submit">Salva</button></div>
     </form>

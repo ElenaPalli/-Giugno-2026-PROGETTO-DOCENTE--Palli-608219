@@ -15,6 +15,8 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 
     boolean existsByNameAndYearFoundationAndIdNot(String name, int yearFoundation, Long id);
 
+    Optional<Team> findByNameIgnoreCase(String name);
+
     // Utilizziamo @EntityGraph per evitare il problema delle N+1 query
     // pre-caricando la collezione 'players'.
     @EntityGraph(attributePaths = { "players" })

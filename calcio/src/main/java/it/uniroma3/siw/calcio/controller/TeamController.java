@@ -3,6 +3,8 @@ package it.uniroma3.siw.calcio.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Base64;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.calcio.model.Team;
 import it.uniroma3.siw.calcio.model.Player;
@@ -65,7 +68,8 @@ public class TeamController {
             BindingResult bindingResult, Model model,
             @RequestParam(required = false) String action,
             @RequestParam(required = false) Long playerId,
-            @RequestParam(required = false) List<Long> playerIds) {
+            @RequestParam(required = false) List<Long> playerIds,
+            @RequestParam(value = "logoFile", required = false) MultipartFile logoFile) {
 
         // Ricostruisce la lista giocatori dagli hidden input
         List<Player> players = new ArrayList<>();
@@ -94,6 +98,19 @@ public class TeamController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("players", playerService.findAll());
             return "admin/teams/form";
+        }
+
+        if (logoFile != null && !logoFile.isEmpty()) {
+            try {
+                String base64Image = Base64.getEncoder().encodeToString(logoFile.getBytes());
+                team.setLogo("data:" + logoFile.getContentType() + ";base64," + base64Image);
+            } catch (IOException e) {
+                logger.error("Error converting logo to base64", e);
+            }
+        } else if (team.getId() != null) {
+            // Se non è stato caricato un nuovo logo in modifica, mantenere il vecchio
+            Optional<Team> existingTeam = teamService.findById(team.getId());
+            existingTeam.ifPresent(t -> team.setLogo(t.getLogo()));
         }
 
         teamService.save(team);

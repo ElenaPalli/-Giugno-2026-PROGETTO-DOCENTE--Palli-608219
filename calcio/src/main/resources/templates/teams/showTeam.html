@@ -40,7 +40,9 @@
 			</div>
 		</div>
 
-		<!-- <span><img width="5%" th:src="${team.urlImage}" alt="Immagine della squadra" /></span> -->
+		<div style="text-align: center; margin-bottom: 20px;">
+			<img th:if="${team.logo != null}" th:src="${team.logo}" alt="Logo Squadra" style="max-width: 150px; border-radius: 8px;"/>
+		</div>
 
 		<!-- 
 		<div>

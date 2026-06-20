@@ -2,6 +2,7 @@ package it.uniroma3.siw.calcio.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,9 @@ public class Team {
     private int yearFoundation;
     @NotBlank
     private String city;
+
+    @Column(columnDefinition = "TEXT")
+    private String logo;
 
     @ManyToMany(mappedBy = "teams")
     private List<Tournament> tournaments;
@@ -69,6 +73,14 @@ public class Team {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public List<Tournament> getTournaments() {
