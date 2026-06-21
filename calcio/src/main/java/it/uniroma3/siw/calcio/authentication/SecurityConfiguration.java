@@ -79,7 +79,7 @@ public class SecurityConfiguration {
             oauth2.authorizationEndpoint(endpoint -> 
                 endpoint.authorizationRequestResolver(authorizationRequestResolver(clientRegistrationRepository))
             );
-            oauth2.userInfoEndpoint(userInfo -> userInfo.oidcUserService(customOAuth2UserService));
+            oauth2.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService));
             oauth2.defaultSuccessUrl("/", true);
         });
 

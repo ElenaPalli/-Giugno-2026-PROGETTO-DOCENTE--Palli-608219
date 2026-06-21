@@ -3,10 +3,10 @@ package it.uniroma3.siw.calcio.authentication;
 import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.calcio.model.Credentials;
@@ -14,7 +14,7 @@ import it.uniroma3.siw.calcio.model.User;
 import it.uniroma3.siw.calcio.service.CredentialsService;
 
 @Service
-public class CustomOAuth2UserService extends OidcUserService {
+public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final CredentialsService credentialsService;
 
@@ -23,16 +23,16 @@ public class CustomOAuth2UserService extends OidcUserService {
     }
 
     @Override
-    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-        OidcUser oidcUser = super.loadUser(userRequest);
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        OAuth2User oauth2User = super.loadUser(userRequest);
 
-        String email = oidcUser.getAttribute("email");
-        String name = oidcUser.getAttribute("name");
-        String givenName = oidcUser.getAttribute("given_name");
-        String familyName = oidcUser.getAttribute("family_name");
+        String email = oauth2User.getAttribute("email");
+        String name = oauth2User.getAttribute("name");
+        String givenName = oauth2User.getAttribute("given_name");
+        String familyName = oauth2User.getAttribute("family_name");
 
         if (email == null) {
-            email = oidcUser.getName(); // Fallback
+            email = oauth2User.getName(); // Fallback
         }
 
         Credentials credentials = credentialsService.getCredentials(email);
@@ -55,6 +55,6 @@ public class CustomOAuth2UserService extends OidcUserService {
                 .authorities(credentials.getRole())
                 .build();
 
-        return new OAuth2UserDetails(oidcUser, userDetails);
+        return new OAuth2UserDetails(oauth2User, userDetails);
     }
 }

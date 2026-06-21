@@ -5,23 +5,21 @@ import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-public class OAuth2UserDetails implements OidcUser, UserDetails {
+public class OAuth2UserDetails implements OAuth2User, UserDetails {
 
-    private OidcUser oidcUser;
+    private OAuth2User oauth2User;
     private UserDetails userDetails;
 
-    public OAuth2UserDetails(OidcUser oidcUser, UserDetails userDetails) {
-        this.oidcUser = oidcUser;
+    public OAuth2UserDetails(OAuth2User oauth2User, UserDetails userDetails) {
+        this.oauth2User = oauth2User;
         this.userDetails = userDetails;
     }
 
     @Override
     public Map<String, Object> getAttributes() {
-        return oidcUser.getAttributes();
+        return oauth2User.getAttributes();
     }
 
     @Override
@@ -31,7 +29,7 @@ public class OAuth2UserDetails implements OidcUser, UserDetails {
 
     @Override
     public String getName() {
-        return oidcUser.getName();
+        return oauth2User.getName();
     }
 
     @Override
@@ -62,20 +60,5 @@ public class OAuth2UserDetails implements OidcUser, UserDetails {
     @Override
     public boolean isEnabled() {
         return userDetails.isEnabled();
-    }
-
-    @Override
-    public Map<String, Object> getClaims() {
-        return oidcUser.getClaims();
-    }
-
-    @Override
-    public OidcUserInfo getUserInfo() {
-        return oidcUser.getUserInfo();
-    }
-
-    @Override
-    public OidcIdToken getIdToken() {
-        return oidcUser.getIdToken();
     }
 }
