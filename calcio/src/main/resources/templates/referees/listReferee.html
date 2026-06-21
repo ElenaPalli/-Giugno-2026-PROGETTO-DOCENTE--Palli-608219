@@ -28,8 +28,10 @@
     <div th:if="${referees==null || referees.isEmpty()}">Non ci sono arbitri nel sistema</div>
     <ul>
         <li th:each="referee : ${referees}">
-            <a th:href="@{'/referees' + '/' + ${referee.id}}" th:text="${referee.name} + ' ' + ${referee.surname}">Nome
-                Cognome</a>
+            <a th:href="@{'/referees' + '/' + ${referee.id}}" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <div th:text="${referee.name} + ' ' + ${referee.surname}" style="font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Nome Cognome</div>
+                <div style="font-size: 14px; font-weight: 600; color: #0056b3; width: 100%; text-align: right; box-sizing: border-box; padding-right: 24px; margin-top: auto;">Esplora &rarr;</div>
+            </a>
         </li>
     </ul>
     <div th:if="${isAdmin}">

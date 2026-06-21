@@ -27,9 +27,10 @@
     <h1>Dettagli Arbitro</h1>
 
     <div th:if="${referee}" class="content-card">
-        <p><strong>Nome:</strong> <span th:text="${referee.name}">Nome</span></p>
-        <p><strong>Cognome:</strong> <span th:text="${referee.surname}">Cognome</span></p>
-        <p><strong>Codice Arbitrale:</strong> <span th:text="${referee.refereeCode}">Codice</span></p>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 th:text="${referee.name} + ' ' + ${referee.surname}" style="margin-bottom: 10px;">Nome Cognome</h2>
+            <span style="color: var(--text-muted);">Codice Arbitrale: <strong th:text="${referee.refereeCode}" style="color: var(--text-main);">Codice</strong></span>
+        </div>
 
         <div th:if="${isAdmin}">
             <hr>

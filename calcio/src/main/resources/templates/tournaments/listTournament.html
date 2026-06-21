@@ -27,9 +27,12 @@
 	<h1>Tornei</h1>
 	<div th:if="${tournaments==null || tournaments.isEmpty()}">Non ci sono tornei nel sistema</div>
 	<ul>
-		<li th:each="tournament : ${tournaments}" style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-			<img th:if="${tournament.logo != null and !tournament.logo.isEmpty()}" th:src="${tournament.logo}" alt="Logo" style="height: 35px; width: auto; object-fit: contain; margin-right: 15px;" />
-			<a th:href="@{'/tournaments' + '/' + ${tournament.id}}" th:text="${tournament.name}">nome</a>
+		<li th:each="tournament : ${tournaments}">
+			<a th:href="@{'/tournaments' + '/' + ${tournament.id}}" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+				<img th:if="${tournament.logo != null and !tournament.logo.isEmpty()}" th:src="${tournament.logo}" alt="Logo" style="height: 40px; width: auto; object-fit: contain; margin-bottom: 10px;" />
+				<div th:text="${tournament.name}" style="font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">nome</div>
+				<div style="font-size: 14px; font-weight: 600; color: #0056b3; width: 100%; text-align: right; box-sizing: border-box; padding-right: 24px; margin-top: auto;">Esplora &rarr;</div>
+			</a>
 		</li>
 	</ul>
 	<div th:if="${isAdmin}">

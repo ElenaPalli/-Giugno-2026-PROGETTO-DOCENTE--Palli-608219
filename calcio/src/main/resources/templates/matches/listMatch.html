@@ -28,8 +28,20 @@
     <div th:if="${matches==null || matches.isEmpty()}">Non ci sono partite nel sistema</div>
     <ul>
         <li th:each="match : ${matches}">
-            <a th:href="@{'/matches' + '/' + ${match.id}}"
-                th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}">Roma vs Lazio</a>
+            <a th:href="@{'/matches' + '/' + ${match.id}}" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 12px; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                        <img th:if="${match.homeTeam.logo != null and !match.homeTeam.logo.isEmpty()}" th:src="${match.homeTeam.logo}" alt="Home Logo" style="height: 35px; width: auto; object-fit: contain; margin-bottom: 5px;" />
+                        <span th:text="${match.homeTeam.name}" style="font-size: 16px; font-weight: 700; color: var(--text-main); text-align: center;">Roma</span>
+                    </div>
+                    <div style="font-size: 14px; font-weight: 600; color: var(--text-muted);">vs</div>
+                    <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                        <img th:if="${match.awayTeam.logo != null and !match.awayTeam.logo.isEmpty()}" th:src="${match.awayTeam.logo}" alt="Away Logo" style="height: 35px; width: auto; object-fit: contain; margin-bottom: 5px;" />
+                        <span th:text="${match.awayTeam.name}" style="font-size: 16px; font-weight: 700; color: var(--text-main); text-align: center;">Lazio</span>
+                    </div>
+                </div>
+                <div style="font-size: 14px; font-weight: 600; color: #0056b3; width: 100%; text-align: right; box-sizing: border-box; padding-right: 24px; margin-top: auto;">Esplora &rarr;</div>
+            </a>
         </li>
     </ul>
     <div th:if="${isAdmin}">
