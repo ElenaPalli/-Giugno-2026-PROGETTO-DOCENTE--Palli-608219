@@ -40,6 +40,11 @@ public class MatchService {
         return (List<Match>) matchRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Match> findByTeamId(Long teamId) {
+        return matchRepository.findByHomeTeamIdOrAwayTeamId(teamId, teamId);
+    }
+
     @Transactional
     public void deleteById(Long id) {
         Optional<Match> matchOpt = matchRepository.findById(id);

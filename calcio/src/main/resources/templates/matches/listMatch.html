@@ -25,6 +25,18 @@
 	</header>
     
     <h1>Partite</h1>
+    
+    <div style="margin-bottom: 20px; display: flex; justify-content: flex-start;">
+        <form th:action="@{/matches}" method="GET" style="display: flex; gap: 10px; align-items: center;">
+            <label for="teamFilter" style="margin-bottom: 0;">Filtra per squadra:</label>
+            <select id="teamFilter" name="teamId" style="margin-bottom: 0; min-width: 200px;">
+                <option value="">Tutte le squadre</option>
+                <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}" th:selected="${team.id == selectedTeamId}"></option>
+            </select>
+            <button type="submit" style="padding: 10px 20px; margin-bottom: 0;">Filtra</button>
+        </form>
+    </div>
+
     <div th:if="${matches==null || matches.isEmpty()}">Non ci sono partite nel sistema</div>
     <ul>
         <li th:each="match : ${matches}">

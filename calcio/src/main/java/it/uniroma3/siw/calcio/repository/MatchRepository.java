@@ -16,6 +16,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     List<Match> findByAwayTeam(Team awayTeam);
 
+    List<Match> findByHomeTeamIdOrAwayTeamId(Long homeTeamId, Long awayTeamId);
+
     // Utilizziamo una @Query con JOIN FETCH espliciti invece di @EntityGraph.
     // In questo caso, essendo 'homeTeam', 'awayTeam' e 'referee' relazioni verso
     // singole entità (ManyToOne),

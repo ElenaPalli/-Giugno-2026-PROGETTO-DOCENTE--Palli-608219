@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.calcio.model.Comment;
 import it.uniroma3.siw.calcio.model.Match;
@@ -36,8 +37,14 @@ public class MatchController {
     }
 
     @GetMapping("/matches")
-    public String list(Model model) {
-        model.addAttribute("matches", matchService.findAll());
+    public String list(@RequestParam(required = false) Long teamId, Model model) {
+        if (teamId != null) {
+            model.addAttribute("matches", matchService.findByTeamId(teamId));
+        } else {
+            model.addAttribute("matches", matchService.findAll());
+        }
+        model.addAttribute("teams", teamService.findAll());
+        model.addAttribute("selectedTeamId", teamId);
         return "matches/listMatch";
     }
 
