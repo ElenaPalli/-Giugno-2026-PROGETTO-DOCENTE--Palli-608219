@@ -2,7 +2,6 @@ package it.uniroma3.siw.calcio.model;
 
 import java.time.LocalDate;
 
-import it.uniroma3.siw.calcio.validation.NotFutureYear;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

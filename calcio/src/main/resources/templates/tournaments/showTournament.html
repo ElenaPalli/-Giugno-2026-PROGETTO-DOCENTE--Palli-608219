@@ -28,9 +28,10 @@
 	<div th:if="${tournament}" class="content-card">
 
 		<div style="text-align: center; margin-bottom: 40px;">
-			<h2 th:text="${tournament.name}" style="font-weight: bold; margin-bottom: 10px;">Nome Torneo</h2>
-			<p th:text="${tournament.description}" style="font-size: 14px; font-weight: normal; margin-top: 0;">
+			<h2 th:text="${tournament.name}" style="font-weight: bold; margin-bottom: 15px;">Nome Torneo</h2>
+			<p th:text="${tournament.description}" style="font-size: 14px; font-weight: normal; margin-top: 0; margin-bottom: 15px;">
 				descrizione</p>
+			<img th:if="${tournament.logo != null and !tournament.logo.isEmpty()}" th:src="${tournament.logo}" alt="Logo Torneo" style="max-width: 150px; border-radius: 8px;" />
 		</div>
 
 		<div style="margin-bottom: 15px;">
@@ -53,7 +54,9 @@
 				<div th:each="match : ${playedMatches}" class="match-row">
 					<div class="match-date" th:text="${match.date} + ':'">2025-01-01:</div>
 					<a th:href="@{'/matches' + '/' + ${match.id}}" class="match-card bg-banner-style">
-						<span th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma 3 - 1 Lazio</span>
+						<span
+							th:text="${match.homeTeam.name} + ' ' + ${match.goalsHome} + ' - ' + ${match.goalsAway} + ' ' + ${match.awayTeam.name}">Roma
+							3 - 1 Lazio</span>
 					</a>
 				</div>
 			</div>

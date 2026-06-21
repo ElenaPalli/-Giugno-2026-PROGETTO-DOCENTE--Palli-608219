@@ -7,26 +7,27 @@
 </head>
 
 <body>
-	<header class="top-banner">
-		<div class="banner-logo">
-			<a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
-		</div>
-		<div class="banner-auth">
-			<div th:if="${userDetails != null}">
-				<span th:text="${loggedUsername}" class="username-display"></span>
-				<form th:action="@{/logout}" method="POST" style="display:inline;">
-					<button type="submit" class="btn-logout">Logout</button>
-				</form>
-			</div>
-			<div th:unless="${userDetails != null}">
-				<a href="/login"><button type="button" class="btn-login">Login</button></a>
-			</div>
-		</div>
-	</header>
-    
+    <header class="top-banner">
+        <div class="banner-logo">
+            <a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
+        </div>
+        <div class="banner-auth">
+            <div th:if="${userDetails != null}">
+                <span th:text="${loggedUsername}" class="username-display"></span>
+                <form th:action="@{/logout}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+            </div>
+            <div th:unless="${userDetails != null}">
+                <a href="/login"><button type="button" class="btn-login">Login</button></a>
+            </div>
+        </div>
+    </header>
+
     <h1>Aggiungi Torneo</h1>
-    <form th:action="@{/admin/tournaments}" method="POST" th:object="${tournament}">
+    <form th:action="@{/admin/tournaments}" method="POST" th:object="${tournament}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{logo}" />
         <div th:if="${#fields.hasGlobalErrors()}">
             <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" style="color:red">...</p>
         </div>
@@ -41,6 +42,10 @@
         <div>
             <label>Descrizione:</label> <textarea th:field="${tournament.description}"></textarea>
             <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+        </div>
+        <div>
+            <label>Logo:</label> 
+            <input type="file" name="logoFile" accept="image/*" />
         </div>
         <div>
             <label>Squadre Iscritte:</label>

@@ -23,11 +23,12 @@
 			</div>
 		</div>
 	</header>
-	
+
 	<h1>Tornei</h1>
 	<div th:if="${tournaments==null || tournaments.isEmpty()}">Non ci sono tornei nel sistema</div>
 	<ul>
-		<li th:each="tournament : ${tournaments}">
+		<li th:each="tournament : ${tournaments}" style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+			<img th:if="${tournament.logo != null and !tournament.logo.isEmpty()}" th:src="${tournament.logo}" alt="Logo" style="height: 35px; width: auto; object-fit: contain; margin-right: 15px;" />
 			<a th:href="@{'/tournaments' + '/' + ${tournament.id}}" th:text="${tournament.name}">nome</a>
 		</li>
 	</ul>

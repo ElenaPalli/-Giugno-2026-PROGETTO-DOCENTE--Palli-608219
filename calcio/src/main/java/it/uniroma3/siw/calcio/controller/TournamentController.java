@@ -1,8 +1,13 @@
 package it.uniroma3.siw.calcio.controller;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.calcio.model.Match;
 import it.uniroma3.siw.calcio.model.Tournament;
@@ -19,6 +26,7 @@ import jakarta.validation.Valid;
 
 @Controller
 public class TournamentController {
+    private static final Logger logger = LoggerFactory.getLogger(TournamentController.class);
     private final TournamentService tournamentService;
     private final TeamService teamService;
 
@@ -86,10 +94,23 @@ public class TournamentController {
 
     @PostMapping("/admin/tournaments")
     public String save(@Valid @ModelAttribute("tournament") Tournament tournament, BindingResult bindingResult,
-            Model model) {
+            Model model, @RequestParam(value = "logoFile", required = false) MultipartFile logoFile) {
         if (bindingResult.hasErrors()) {
             return "admin/tournaments/form";
         }
+
+        if (logoFile != null && !logoFile.isEmpty()) {
+            try {
+                String base64Image = Base64.getEncoder().encodeToString(logoFile.getBytes());
+                tournament.setLogo("data:" + logoFile.getContentType() + ";base64," + base64Image);
+            } catch (IOException e) {
+                logger.error("Error converting logo to base64", e);
+            }
+        } else if (tournament.getId() != null) {
+            Optional<Tournament> existing = tournamentService.findById(tournament.getId());
+            existing.ifPresent(t -> tournament.setLogo(t.getLogo()));
+        }
+
         tournamentService.save(tournament);
         return "redirect:/tournaments";
     }
