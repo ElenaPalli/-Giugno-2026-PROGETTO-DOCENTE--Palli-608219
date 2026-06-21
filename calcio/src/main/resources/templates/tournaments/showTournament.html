@@ -34,7 +34,7 @@
 		</div>
 
 		<div style="margin-bottom: 15px;">
-			<span th:text="'Anno: ' + ${tournament.year}" style="font-weight: 600;">Anno: 2025</span>
+			<strong>Anno:</strong> <span th:text="${tournament.year}">2025</span>
 		</div>
 
 		<div>
@@ -80,7 +80,7 @@
 					<tr>
 						<th>Posizione</th>
 						<th>Squadra</th>
-						<th>Gol Fatti</th>
+						<th>Gol</th>
 					</tr>
 				</thead>
 				<tbody>

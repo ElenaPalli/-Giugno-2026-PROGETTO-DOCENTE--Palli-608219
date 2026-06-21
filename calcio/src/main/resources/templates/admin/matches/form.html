@@ -7,23 +7,23 @@
 </head>
 
 <body>
-	<header class="top-banner">
-		<div class="banner-logo">
-			<a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
-		</div>
-		<div class="banner-auth">
-			<div th:if="${userDetails != null}">
-				<span th:text="${loggedUsername}" class="username-display"></span>
-				<form th:action="@{/logout}" method="POST" style="display:inline;">
-					<button type="submit" class="btn-logout">Logout</button>
-				</form>
-			</div>
-			<div th:unless="${userDetails != null}">
-				<a href="/login"><button type="button" class="btn-login">Login</button></a>
-			</div>
-		</div>
-	</header>
-    
+    <header class="top-banner">
+        <div class="banner-logo">
+            <a href="/"><img src="/images/logo-siw.png" alt="Calcio Analytics" /></a>
+        </div>
+        <div class="banner-auth">
+            <div th:if="${userDetails != null}">
+                <span th:text="${loggedUsername}" class="username-display"></span>
+                <form th:action="@{/logout}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+            </div>
+            <div th:unless="${userDetails != null}">
+                <a href="/login"><button type="button" class="btn-login">Login</button></a>
+            </div>
+        </div>
+    </header>
+
     <h1>Aggiungi Partita</h1>
     <form th:action="@{/admin/matches}" method="POST" th:object="${match}">
         <input type="hidden" th:field="*{id}" />
@@ -70,7 +70,8 @@
         <div>
             <label>Stato:</label>
             <select th:field="*{state}" required>
-                <option th:each="s : ${states}" th:value="${s.name()}" th:text="${s.name()}"></option>
+                <option value="SCHEDULED">IN PROGRAMMA</option>
+                <option value="PLAYED">GIOCATA</option>
             </select>
         </div>
         <div>
@@ -83,6 +84,75 @@
     </form>
     <br>
     <a th:href="@{/admin/index}">Torna alla dashboard Admin</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const homeSelect = document.getElementById('homeTeam');
+            const awaySelect = document.getElementById('awayTeam');
+
+            function updateOptions() {
+                const homeVal = homeSelect.value;
+                const awayVal = awaySelect.value;
+
+                Array.from(awaySelect.options).forEach(opt => {
+                    if (opt.value !== "" && opt.value === homeVal) {
+                        opt.style.display = 'none';
+                        opt.disabled = true;
+                    } else {
+                        opt.style.display = '';
+                        opt.disabled = false;
+                    }
+                });
+
+                Array.from(homeSelect.options).forEach(opt => {
+                    if (opt.value !== "" && opt.value === awayVal) {
+                        opt.style.display = 'none';
+                        opt.disabled = true;
+                    } else {
+                        opt.style.display = '';
+                        opt.disabled = false;
+                    }
+                });
+            }
+
+            homeSelect.addEventListener('change', () => {
+                updateOptions();
+                if (awaySelect.value === homeSelect.value) awaySelect.value = "";
+            });
+
+            awaySelect.addEventListener('change', () => {
+                updateOptions();
+                if (homeSelect.value === awaySelect.value) homeSelect.value = "";
+            });
+
+            // Esegui all'avvio nel caso ci siano già valori selezionati (es. in modifica)
+            updateOptions();
+
+            // Logica per aggiornare automaticamente lo stato in base alla data e ora
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            const stateSelect = document.getElementById('state');
+
+            function updateMatchState() {
+                if (!dateInput.value || !timeInput.value) return;
+                
+                const matchDateTime = new Date(`${dateInput.value}T${timeInput.value}`);
+                const now = new Date();
+                
+                if (matchDateTime < now) {
+                    stateSelect.value = "PLAYED";
+                } else {
+                    stateSelect.value = "SCHEDULED";
+                }
+            }
+
+            if (dateInput && timeInput && stateSelect) {
+                dateInput.addEventListener('change', updateMatchState);
+                timeInput.addEventListener('change', updateMatchState);
+                updateMatchState(); // Aggiorna all'avvio
+            }
+        });
+    </script>
 </body>
 
 </html>

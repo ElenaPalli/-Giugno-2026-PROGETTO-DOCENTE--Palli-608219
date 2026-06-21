@@ -26,6 +26,7 @@
     
     <h1>Aggiungi Arbitro</h1>
     <form th:action="@{/admin/referees}" method="POST" th:object="${referee}">
+        <input type="hidden" th:field="*{id}" />
         <div th:if="${#fields.hasGlobalErrors()}">
             <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" style="color:red">...</p>
         </div>

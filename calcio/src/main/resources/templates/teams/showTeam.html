@@ -34,10 +34,10 @@
 
 		<div style="margin-bottom: 25px;">
 			<div style="margin-bottom: 5px;">
-				<span th:text="'Anno di fondazione: ' + ${team.yearFoundation}" style="font-weight: 600;">Anno di fondazione: 2000</span>
+				<strong>Anno di fondazione:</strong> <span th:text="${team.yearFoundation}">2000</span>
 			</div>
 			<div>
-				<span th:text="'Città: ' + ${team.city}" style="font-weight: 600;">Città: Roma</span>
+				<strong>Città:</strong> <span th:text="${team.city}">Roma</span>
 			</div>
 		</div>
 

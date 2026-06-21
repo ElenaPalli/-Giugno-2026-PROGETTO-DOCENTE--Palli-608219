@@ -44,6 +44,7 @@ public class PlayerController {
 			BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("teams", teamService.findAll());
 			return "admin/players/form";
 		}
 		try {
@@ -51,6 +52,7 @@ public class PlayerController {
 			return "redirect:/players";
 		} catch (DuplicatePlayerException e) {
 			bindingResult.reject("player.duplicate", "Esiste già un giocatore con questo nome e data di nascita");
+			model.addAttribute("teams", teamService.findAll());
 			return "admin/players/form";
 		}
 	}

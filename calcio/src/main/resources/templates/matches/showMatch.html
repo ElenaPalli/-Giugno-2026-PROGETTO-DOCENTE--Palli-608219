@@ -27,7 +27,7 @@
     <h1>Dettagli Partita</h1>
     <div th:if="${match}" class="content-card">
 
-        <h2>
+        <h2 style="text-align: center; margin-bottom: 30px;">
             <a th:href="@{'/teams/' + ${match.homeTeam.id}}" th:text="${match.homeTeam.name}">Squadra Casa</a>
             <span th:if="${match.state.name() != 'PLAYED'}"> vs </span>
             <span th:if="${match.state.name() == 'PLAYED'}"

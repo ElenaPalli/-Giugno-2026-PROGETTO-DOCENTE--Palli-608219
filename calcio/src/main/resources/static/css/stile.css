@@ -84,12 +84,7 @@ h1 {
 
 
 /* Cards Container Grid */
-body>div:has(> a[href="/tournaments"]),
-body>div:has(> a[href="/teams"]),
-body>div:has(> a[href="/players"]),
-body>div:has(> a[href="/matches"]),
-body>div:has(> a[href="/referees"]),
-body>div:has(> a[href="/referees/react"]) {
+.home-card {
   display: inline-block;
   width: calc(33.333% - 20px);
   margin-right: 20px;
@@ -104,22 +99,12 @@ body>div:has(> a[href="/referees/react"]) {
   position: relative;
 }
 
-body>div:has(> a[href="/tournaments"]):hover,
-body>div:has(> a[href="/teams"]):hover,
-body>div:has(> a[href="/players"]):hover,
-body>div:has(> a[href="/matches"]):hover,
-body>div:has(> a[href="/referees"]):hover,
-body>div:has(> a[href="/referees/react"]):hover {
+.home-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
-body>div:has(> a[href="/tournaments"]) a,
-body>div:has(> a[href="/teams"]) a,
-body>div:has(> a[href="/players"]) a,
-body>div:has(> a[href="/matches"]) a,
-body>div:has(> a[href="/referees"]) a,
-body>div:has(> a[href="/referees/react"]) a {
+.home-card a {
   display: flex;
   flex-direction: column;
   padding: 24px 0;
