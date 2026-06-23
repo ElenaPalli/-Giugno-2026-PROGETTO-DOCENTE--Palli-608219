@@ -9,9 +9,16 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE })
+// Specifica che l'annotazione può essere usata solo sopra agli attributi (campi) di una classe
+@Target(ElementType.FIELD)
+// Dice a Java di mantenere viva l'annotazione in memoria anche durante
+// l'esecuzione
 @Retention(RetentionPolicy.RUNTIME)
+// Collega questa annotazione alla classe che contiene la logica reale di
+// validazione
 @Constraint(validatedBy = NotFutureYearValidator.class)
+// Include l'annotazione nella generazione automatica della documentazione
+// Javadoc
 @Documented
 public @interface NotFutureYear {
     String message() default "{team.futureYear}";

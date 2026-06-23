@@ -2,7 +2,6 @@ package it.uniroma3.siw.calcio.controller;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,23 +57,6 @@ public class TournamentController {
                     scheduledMatches.add(m);
                 }
             }
-
-            // Creiamo un "comparatore normale" locale per ordinare prima per data, poi per
-            // ora
-            Comparator<Match> matchComparator = new Comparator<Match>() {
-                @Override
-                public int compare(Match m1, Match m2) {
-                    int dateCmp = m1.getDate().compareTo(m2.getDate());
-                    if (dateCmp == 0) {
-                        return m1.getTime().compareTo(m2.getTime());
-                    }
-                    return dateCmp;
-                }
-            };
-
-            // Ordiniamo le liste
-            java.util.Collections.sort(playedMatches, matchComparator);
-            java.util.Collections.sort(scheduledMatches, matchComparator);
 
             model.addAttribute("playedMatches", playedMatches);
             model.addAttribute("scheduledMatches", scheduledMatches);

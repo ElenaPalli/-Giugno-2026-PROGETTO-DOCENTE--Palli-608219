@@ -3,7 +3,6 @@ package it.uniroma3.siw.calcio.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,11 +25,10 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
             "ORDER BY goalsFor DESC", nativeQuery = true)
     List<RankingRow> calculateTournamentRanking(@Param("tournamentId") Long tournamentId);
 
-    // EntityGraph serve per evitare N+1 Select quando si deve pre-caricare una
-    // singola collezione
-    // (in questo caso 'matches').
-    @EntityGraph(attributePaths = { "matches" })
-    @Query("SELECT t FROM Tournament t WHERE t.id = :id")
+    // Usiamo LEFT JOIN FETCH con ORDER BY per pre-caricare (fetch eager) l'intera
+    // collezione di matches con un'unica query SQL e ordinarle a livello DB.
+    // Così viene evitato il problema delle "N+1 query".
+    @Query("SELECT t FROM Tournament t LEFT JOIN FETCH t.matches m WHERE t.id = :id ORDER BY m.date ASC, m.time ASC")
     Optional<Tournament> findByIdWithMatches(@Param("id") Long id);
 
     boolean existsByNameAndYear(String name, int year);
