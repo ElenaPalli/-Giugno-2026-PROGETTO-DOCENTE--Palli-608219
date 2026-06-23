@@ -24,7 +24,7 @@
         </div>
     </header>
 
-    <h1>Aggiungi Torneo</h1>
+    <h1 th:text="${tournament.id == null ? 'Aggiungi Torneo' : 'Modifica Torneo'}">Aggiungi Torneo</h1>
     <form th:action="@{/admin/tournaments}" method="POST" th:object="${tournament}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}" />
         <input type="hidden" th:field="*{logo}" />
@@ -58,7 +58,7 @@
         <div><button type="submit">Salva</button></div>
     </form>
     <br>
-    <a th:href="@{/admin/index}">Torna alla dashboard Admin</a>
+
 </body>
 
 </html>

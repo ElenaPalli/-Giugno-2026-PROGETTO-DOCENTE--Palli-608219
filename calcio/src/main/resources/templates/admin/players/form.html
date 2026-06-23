@@ -24,7 +24,7 @@
 		</div>
 	</header>
     
-    <h1>Aggiungi Giocatore</h1>
+    <h1 th:text="${player.id == null ? 'Aggiungi Giocatore' : 'Modifica Giocatore'}">Aggiungi Giocatore</h1>
     <form th:action="@{/admin/players}" method="POST" th:object="${player}">
         <input type="hidden" th:field="*{id}" />
         <div th:if="${#fields.hasGlobalErrors()}">
@@ -67,7 +67,7 @@
         <div><button type="submit">Salva</button></div>
     </form>
     <br>
-    <a th:href="@{/admin/index}">Torna alla dashboard Admin</a>
+
 </body>
 
 </html>

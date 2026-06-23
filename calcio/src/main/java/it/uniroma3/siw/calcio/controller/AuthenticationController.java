@@ -33,11 +33,6 @@ public class AuthenticationController {
 		return "authentication/login";
 	}
 
-	@GetMapping(value = "/admin/index")
-	public String index() {
-		return "admin/index";
-	}
-
 	@PostMapping(value = { "/register" })
 	public String registerUser(@Valid @ModelAttribute("user") User user,
 			BindingResult userBindingResult, @Valid @ModelAttribute("credentials") Credentials credentials,

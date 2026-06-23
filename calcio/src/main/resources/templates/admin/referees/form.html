@@ -24,7 +24,7 @@
 		</div>
 	</header>
     
-    <h1>Aggiungi Arbitro</h1>
+    <h1 th:text="${referee.id == null ? 'Aggiungi Arbitro' : 'Modifica Arbitro'}">Aggiungi Arbitro</h1>
     <form th:action="@{/admin/referees}" method="POST" th:object="${referee}">
         <input type="hidden" th:field="*{id}" />
         <div th:if="${#fields.hasGlobalErrors()}">
@@ -45,7 +45,7 @@
         <div><button type="submit">Salva</button></div>
     </form>
     <br>
-    <a th:href="@{/admin/index}">Torna alla dashboard Admin</a>
+
 </body>
 
 </html>
