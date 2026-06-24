@@ -41,8 +41,11 @@ public class MatchController {
         if (teamId != null) {
             model.addAttribute("matches", matchService.findByTeamId(teamId));
         } else {
-            model.addAttribute("matches", matchService.findAll());
+            model.addAttribute("matches", matchService.findAllWithDetails());
         }
+        // passa la lista di tutte le squadre per popolare tendina->selectedTeamId
+        // per dice al file HTML quale squadra era stata appena selezionata, così
+        // da farle apparire l'attributo selected e poi filtrare
         model.addAttribute("teams", teamService.findAll());
         model.addAttribute("selectedTeamId", teamId);
         return "matches/listMatch";

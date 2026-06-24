@@ -41,6 +41,11 @@ public class MatchService {
     }
 
     @Transactional(readOnly = true)
+    public List<Match> findAllWithDetails() {
+        return matchRepository.findAllWithDetails();
+    }
+
+    @Transactional(readOnly = true)
     public List<Match> findByTeamId(Long teamId) {
         return matchRepository.findByHomeTeamIdOrAwayTeamId(teamId, teamId);
     }

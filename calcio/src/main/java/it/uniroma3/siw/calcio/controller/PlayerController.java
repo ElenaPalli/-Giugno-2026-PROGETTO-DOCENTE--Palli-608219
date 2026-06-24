@@ -28,7 +28,7 @@ public class PlayerController {
 
 	@GetMapping("/players")
 	public String list(Model model) {
-		model.addAttribute("players", playerService.findAll());
+		model.addAttribute("players", playerService.findAllWithTeam());
 		return "players/listPlayer";
 	}
 

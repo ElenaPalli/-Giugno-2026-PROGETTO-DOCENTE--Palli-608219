@@ -24,4 +24,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     // possiamo pre-caricarle tutte insieme in una singola query più grande
     @Query("SELECT m FROM Match m JOIN FETCH m.homeTeam JOIN FETCH m.awayTeam LEFT JOIN FETCH m.referee WHERE m.id = :id")
     Optional<Match> findByIdWithDetails(@Param("id") Long id);
+
+    @Query("SELECT m FROM Match m JOIN FETCH m.homeTeam JOIN FETCH m.awayTeam LEFT JOIN FETCH m.referee")
+    List<Match> findAllWithDetails();
 }
